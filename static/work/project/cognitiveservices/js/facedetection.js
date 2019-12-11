@@ -9,7 +9,7 @@
         // **********************************************
 
         // Replace the subscriptionKey string value with your valid subscription key.
-        var subscriptionKey = "db51abe115734df19ce4c82cd538fd7b";
+        var subscriptionKey = "#";
 
         // Replace or verify the region.
         //

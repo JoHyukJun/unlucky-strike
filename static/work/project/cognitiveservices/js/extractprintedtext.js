@@ -7,7 +7,7 @@ function extractPrintedTextImage() {
     // **********************************************
 
     // Replace <Subscription Key> with your valid subscription key.
-    var subscriptionKey = "ff85de274e2948a78fb11262d375a782";
+    var subscriptionKey = "#";
 
     // You must use the same Azure region in your REST API method as you used to
     // get your subscription keys. For example, if you got your subscription keys
