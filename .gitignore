@@ -126,4 +126,4 @@ dmypy.json
 
 # Custom
 .DS_Store
-.vscode
+.vscode/
