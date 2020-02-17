@@ -6,6 +6,7 @@ import os
 app = Flask(__name__)
 
 app.config.update(
+
 	DEBUG=True,
 	#EMAIL SETTINGS
 	MAIL_SERVER='smtp.gmail.com',
