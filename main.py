@@ -6,7 +6,6 @@ import os
 app = Flask(__name__)
 
 app.config.update(
-
 	DEBUG=True,
 	#EMAIL SETTINGS
 	MAIL_SERVER='smtp.gmail.com',
@@ -40,12 +39,13 @@ def send_email_button():
 	if request.method == 'POST':
 		first_name = request.form['fname']
 		last_name = request.form['lname']
-		sender_email = request.form['senderemail']
+		sender_email = request.form['sender']
 		subject = request.form['subject']
 		message_content = request.form['message']
 
 
 		result = send_email(first_name, last_name, sender_email, subject, message_content)
+		
 
 		if not result:
 			return redirect('/')
@@ -55,13 +55,12 @@ def send_email_button():
 		return render_template('index.html',)
 
 
-
 def send_email(first_name, last_name, sender_email, in_subject, message_content):
 	try:
 		mail = Mail(app)
 		msg = Message(subject=in_subject, sender=sender_email, recipients=["computer@khu.ac.kr"])
-		#msg = Message(subject='test', sender="test@test.test", recipients=["computer@khu.ac.kr"])
-		msg.body = message_content
+		#msg = Message(subject='test', sender="hyukzuny@gmail.com", recipients=["computer@khu.ac.kr"])
+		msg.body = 'fname:\t\t' + first_name + '\n' + 'lname:\t\t' + last_name + '\n' + 'sender:\t\t' + sender_email + '\n' + 'content:\t' + message_content
 		mail.send(msg)
 	except Exception:
 		print('email system error:')
