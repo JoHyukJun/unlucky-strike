@@ -1,5 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_mail import Mail, Message
+
+from werkzeug import secure_filename
+
+
+
 import sys
 import os
 
@@ -7,17 +12,31 @@ app = Flask(__name__)
 
 app.config.update(
 	DEBUG=True,
+
 	#EMAIL SETTINGS
 	MAIL_SERVER='smtp.gmail.com',
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
 	MAIL_USERNAME = 'hyukzuny@gmail.com',
-	MAIL_PASSWORD = '#'
+	MAIL_PASSWORD = '#',
+
+	#FILE SETTINGS
+	MAX_CONTENT_LENGTH = 16 * 1024 * 1024,
+
+	#KEY SETTINGS
+	SECRET_KEY = 'super_secret_key'
 	)
+
 
 @app.route('/')
 def index():
 	return render_template('index.html')
+
+
+'''
+	work directory render fucntion.
+
+'''
 
 
 @app.route('/work/<project>')
@@ -33,7 +52,9 @@ def work(project):
 	elif (project == 'deep-learning-for-advanced-driver-assistance-system-applications'):
 		return render_template('deep-learning-for-advanced-driver-assistance-system-applications.html')
 
-
+'''
+	email functions.
+'''
 @app.route('/email', methods=['POST', 'GET'])
 def send_email_button():
 	if request.method == 'POST':
@@ -43,9 +64,12 @@ def send_email_button():
 		subject = request.form['subject']
 		message_content = request.form['message']
 
+		if (first_name == '' or last_name == '' or sender_email == '' or subject == '' or message_content == ''):
+			flash('Please fill out all forms', 'error')
+			return redirect('/')
 
 		result = send_email(first_name, last_name, sender_email, subject, message_content)
-		
+
 
 		if not result:
 			return redirect('/')
@@ -69,7 +93,24 @@ def send_email(first_name, last_name, sender_email, in_subject, message_content)
 		pass
 
 
+'''
+	image processing.
+'''
+@app.route('/image_upload', methods=['POST', 'GET'])
+def upload_file():
+	if request.method == 'POST':
+		try:
+			f = request.files['file']
+			f.save(secure_filename(f.filename))
+			return redirect('/work/image-processing')
+		except Exception:
+			return 'fail to upload image file'
+			pass
+		finally:
+			pass
 
-
+'''
+	main.
+'''
 if __name__ == '__main__':
 	app.run(host = '0.0.0.0', port = 80, debug = True)
