@@ -10,6 +10,7 @@ import os
 
 app = Flask(__name__)
 
+
 app.config.update(
 	DEBUG=True,
 
@@ -37,8 +38,6 @@ def index():
 	work directory render fucntion.
 
 '''
-
-
 @app.route('/work/<project>')
 def work(project):
 	if (project == 'cognitive-services'):
@@ -52,6 +51,7 @@ def work(project):
 	elif (project == 'deep-learning-for-advanced-driver-assistance-system-applications'):
 		return render_template('deep-learning-for-advanced-driver-assistance-system-applications.html')
 
+
 '''
 	email functions.
 '''
@@ -64,11 +64,36 @@ def send_email_button():
 		subject = request.form['subject']
 		message_content = request.form['message']
 
-		if (first_name == '' or last_name == '' or sender_email == '' or subject == '' or message_content == ''):
+		email_info = []
+		email_info.append(first_name)
+		email_info.append(last_name)
+		email_info.append(sender_email)
+		email_info.append(subject)
+		email_info.append(message_content)
+
+		'''
+			spam protection.
+		'''
+
+		if ('' in email_info):
 			flash('Please fill out all forms', 'error')
+			email_info = []
 			return redirect('/')
 
+		tmp_cnt = 0
+
+		for v in list(set(email_info)):
+			tmp_cnt = email_info.count(v)
+
+			if (tmp_cnt > 1):
+				flash('Invalid Input', 'error')
+				email_info = []
+				return redirect('/')
+
+
+
 		result = send_email(first_name, last_name, sender_email, subject, message_content)
+		email_info = []
 
 
 		if not result:
@@ -84,7 +109,7 @@ def send_email(first_name, last_name, sender_email, in_subject, message_content)
 		mail = Mail(app)
 		msg = Message(subject=in_subject, sender=sender_email, recipients=["computer@khu.ac.kr"])
 		#msg = Message(subject='test', sender="hyukzuny@gmail.com", recipients=["computer@khu.ac.kr"])
-		msg.body = 'fname:\t\t' + first_name + '\n' + 'lname:\t\t' + last_name + '\n' + 'sender:\t\t' + sender_email + '\n' + 'content:\t' + message_content
+		msg.body = 'first name:\t\t' + first_name + '\n' + 'last name:\t\t' + last_name + '\n' + 'sender:\t\t' + sender_email + '\n' + 'content:\t' + message_content
 		mail.send(msg)
 	except Exception:
 		print('email system error:')
@@ -108,6 +133,7 @@ def upload_file():
 			pass
 		finally:
 			pass
+
 
 '''
 	main.
