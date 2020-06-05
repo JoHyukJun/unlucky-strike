@@ -1,0 +1,4 @@
+# Python packages required for main.py
+flask
+Flask-Mail
+Werkzeug

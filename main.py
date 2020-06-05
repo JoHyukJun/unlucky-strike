@@ -1,16 +1,25 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_mail import Mail, Message
-
 from werkzeug import secure_filename
-
-
 
 import sys
 import os
 
+
+__author__ = 'Jo Hyuk Jun'
+__copyright__ = 'Copyright 2020, Bushi Technology'
+__credits__ = ['Jo Hyuk Jun']
+__license__ = ''
+__version__ = '0.0.1'
+__maintainer__ = 'Jo Hyuk Jun'
+__email__ = 'computer@khu.ac.kr'
+__status__ = 'DEV'
+
+
+'''
+   flask app init
+'''
 app = Flask(__name__)
-
-
 app.config.update(
 	DEBUG=True,
 
@@ -35,7 +44,7 @@ def index():
 
 
 '''
-	work directory render fucntion.
+	work directory render fucntion
 
 '''
 @app.route('/work/<project>')
@@ -53,7 +62,7 @@ def work(project):
 
 
 '''
-	email functions.
+	email functions
 '''
 @app.route('/email', methods=['POST', 'GET'])
 def send_email_button():
@@ -72,7 +81,7 @@ def send_email_button():
 		email_info.append(message_content)
 
 		'''
-			spam protection.
+			spam protection
 		'''
 
 		if ('' in email_info):
@@ -119,7 +128,7 @@ def send_email(first_name, last_name, sender_email, in_subject, message_content)
 
 
 '''
-	image processing.
+	image processing
 '''
 @app.route('/image_upload', methods=['POST', 'GET'])
 def upload_file():
@@ -136,7 +145,7 @@ def upload_file():
 
 
 '''
-	main.
+	main
 '''
 if __name__ == '__main__':
 	app.run(host = '0.0.0.0', port = 80, debug = True)

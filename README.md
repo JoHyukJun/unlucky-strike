@@ -1,3 +1,8 @@
 # bushi-technology
-# python flask web project
-# detailed info - www.bushitechnology.com
+
+## Author: Jo Hyuk Jun
+
+
+python flask web project
+
+detailed info - www.bushitechnology.com
