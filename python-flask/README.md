@@ -5,10 +5,10 @@
 ## Download
 - Downlaod Python Packages.
 ```bash
-./download.sh
+$ ./download.sh
 ```
 
 ## Run
 ```bash
-python main.py
+$ python main.py
 ```

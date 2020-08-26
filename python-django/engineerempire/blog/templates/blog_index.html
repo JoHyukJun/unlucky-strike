@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="col-md-8 offset-md-2">
+    <h1>Blog</h1>
+    <hr>
+    {% for post in post_list %}
+    <!--
+    CARD INTERFACE
+
+    <div class="card mb-4">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on }}</p>
+        <p class="card-text">{{ post.body | slice:":300" }}</p>
+        <a href="{% url 'blog_detail' post.pk %}" class="btn btn-primary">Read More &rarr;</a>
+    </div>
+    -->
+    <h2><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
+    <small>
+        {{ post.author }} |&nbsp;
+        {{ post.created_on.date }} |&nbsp;
+        Categories:&nbsp;
+        {% for category in post.categories.all %}
+        <a href="{% url 'blog_category' category.name %}">
+            {{ category.name }}
+        </a>&nbsp;
+        {% endfor %}
+    </small>
+    <p>{{ post.body | safe | slice:":200" }}...</p>
+    {% endfor %}
+
+    <!-- Adding pagination interface.-->
+    {% if post_list.has_other_pages %}
+        <nav aria-label="Page navigation conatiner"></nav>
+        <ul class="pagination justify-content-center">
+            {% if post_list.has_previous %}
+            <li><a href="?page={{ post_list.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+            {% endif %}
+            {% if post_list.has_next %}
+            <li><a href="?page={{ post_list.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+            {% endif %}
+        </ul>
+
+    {% endif %}
+
+    </div>
+{% endblock %}
