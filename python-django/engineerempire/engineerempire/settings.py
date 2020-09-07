@@ -43,7 +43,11 @@ INSTALLED_APPS = [
     'home',
     'projects',
     'blog',
+    # addon apps
     'ckeditor',
+    # markdown settings.
+    #'markdown_deux',
+    #'simplemde',
 ]
 
 MIDDLEWARE = [

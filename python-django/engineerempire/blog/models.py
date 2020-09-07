@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+#from simplemde.fields import SimpleMDEField
 from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 
@@ -18,8 +20,10 @@ class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    #body = SimpleMDEField(blank=True, null=True)
     body = RichTextField(blank=True, null=True)
     #body = models.TextField()
+    upload_file = models.FileField(blank=True, null=True, upload_to='blog/')
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField("Category", related_name='posts')
