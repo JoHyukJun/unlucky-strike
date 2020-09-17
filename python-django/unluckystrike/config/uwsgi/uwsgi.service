@@ -3,7 +3,7 @@ Description=uWSGI service
 After=syslog.target
 
 [Service]
-ExecStart=/home/pi/Desktop/wdir/web/python-django/venv/bin/uwsgi -i /home/pi/Desktop/wdir/web/python-django/engineerempire/config/uwsgi/unluckystrike.ini
+ExecStart=/home/pi/Desktop/wdir/web/python-django/venv/bin/uwsgi -i /home/pi/Desktop/wdir/web/python-django/unluckystrike/config/uwsgi/unluckystrike.ini
 
 Restart=always
 KillSignal=SIGQUIT
