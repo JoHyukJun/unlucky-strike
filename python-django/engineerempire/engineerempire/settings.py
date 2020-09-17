@@ -30,7 +30,6 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '121.136.146.125',
     'localhost',
-    '.ns1-09.azure-dns.com',
     '.unluckystrike.com',
 ]
 
