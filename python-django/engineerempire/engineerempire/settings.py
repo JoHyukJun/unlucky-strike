@@ -28,6 +28,7 @@ SECRET_KEY = 'yo8&ym_kff%lynstd)s7iivlu#cga=6%@fu#^kwh_vo)pj4a%t'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '121.136.146.125',
     'localhost',
     '.ns1-09.azure-dns.com',
     '.unluckystrike.com',
@@ -137,7 +138,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'engineerempire/static',
 ]
-
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Media files
 
