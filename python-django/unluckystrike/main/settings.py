@@ -142,7 +142,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'main/media'
 
 
-# CKEDITOR
+# Ckeditor config
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -154,9 +154,5 @@ CKEDITOR_CONFIGS = {
             ]
         ),
         'codeSnippet_theme': 'railscasts',
-        #'codeSnippet_languages': {
-        #    'python': 'Python',
-        #    'c++': 'C++',
-        #},
     },
 }
