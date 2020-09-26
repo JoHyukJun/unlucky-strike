@@ -3,13 +3,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/unluckystrike_logo.png' %}">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/unluckystrike_logo_clear.png' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow" id="mainNav">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'home_index' %}">
-        <img src="{% static 'images/unluckystrike_logo.png' %}" width=50 height=50>
+        <img src="{% static 'images/unluckystrike_logo_clear.png' %}" width=40 height=40>
       </a>
       <a class="navbar-brand font-weight-bold" href="{% url 'home_index' %}">UNLUCKY STRIKE</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,10 +87,11 @@
   </script>
 
   <!-- Code Block -->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script>hljs.initLineNumbersOnLoad();</script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/railscasts.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>>
+
+
 
   <!-- Lightweight client-side loader that feature-detects and load polyfills only when necessary -->
   <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>

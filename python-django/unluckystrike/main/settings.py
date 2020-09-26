@@ -49,9 +49,6 @@ INSTALLED_APPS = [
     'blog',
     # addon apps
     'ckeditor',
-    # markdown settings.
-    #'markdown_deux',
-    #'simplemde',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +140,23 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'main/media'
+
+
+# CKEDITOR
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'toolbar': 'full',
+        'extraPlugins': ','.join(
+            [
+                'codesnippet',
+            ]
+        ),
+        'codeSnippet_theme': 'railscasts',
+        #'codeSnippet_languages': {
+        #    'python': 'Python',
+        #    'c++': 'C++',
+        #},
+    },
+}
