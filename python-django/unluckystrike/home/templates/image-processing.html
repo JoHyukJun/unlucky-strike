@@ -1,130 +1,66 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
-<div class="fh5co-loader"></div>
-	
-	<div id="page">	
-	<header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner" style="background-image:url(/static/images/cover_bg_3.jpg);" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t js-fullheight">
-						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
-							<div class="profile-thumb" style="background: url(/static/work/project/imageprocessing/images/imageprocessing_logo.png);"></div>
-							<h1><span>Image Processing</span></h1>
-                            <h3><span>Project Report</span></h3>
-                            <p>
-								<ul class="fh5co-social-icons">
-                                    <li><a href="http://unluckystrike.com/"><i class="icon-home"></i></a></li>
-                                    <li><a href="https://github.com/JoHyukJun/image-processing"><i class="icon-github2"></i></a></li>
-									<li><a href="https://github.com/JoHyukJun/image-processing"><i class="icon-info"></i></a></li>
-								</ul>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </header>
-    
 
-    <div id="fh5co-blog">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                    <h2>Face Recognition Using Color</h2>
-                    <p>written by <strong>Jo Hyuk Jun</strong></p>
-				</div>
-			</div>
-        <br>
+<div class="section-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="{% static 'work/images/cover-01.jpg' %}" class="img-responsive" alt="">
+        <div class="card-container">
+          <div class="text-center">
+            <h1 class="h2">004 : Image Processing</h1>
+          </div>
 
-        <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Color.pdf" type="application/pdf" width="100%" height="1000px"/>
+          <div class="text-center">
+          <a href="https://github.com/JoHyukJun/image-processing" title="" class="fa-icon">
+            <i class="fa fa-github"></i>
+          </a>
 
-
-        <br><br>
-    </div>
-
-    </div>
-</div>
-
-
-<div id="fh5co-blog">
-		<div class="container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                    <h2>Face Recognition Using Histogram</h2>
-                    <p>written by <strong>Jo Hyuk Jun</strong></p>
-				</div>
-			</div>
-        <br>
-
-        <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Histogram.pdf" type="application/pdf" width="100%" height="1000px"/>
-
-        <br><br>
-
-    </div>
-</div>
-
-<div id="fh5co-blog">
-    <div class="container">
-        <div class="row animate-box">
-            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <h2>Moving Detection Using Difference Image</h2>
-                <p>written by <strong>Jo Hyuk Jun</strong></p>
-            </div>
+          <a href="https://github.com/JoHyukJun/image-processing" title="" class="fa-icon">
+            <i class="fa fa-info"></i>
+          </a>
+          </div>
         </div>
-    <br>
+      </div>
 
-    <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Moving-Object-Detection-Using-Difference-Image.pdf" type="application/pdf" width="100%" height="1000px"/>
+      
 
-    <br><br>
+      <h2>Face Recognition Using Color</h2>
+      <p>written by <strong>Jo Hyuk Jun</strong></p>
 
-    </div>
-</div>
+      <br>
+      <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Color.pdf" type="application/pdf" width="100%" height="1000px"/>
 
+      <br><br>
 
-<div id="fh5co-blog">
-    <div class="container">
-        <div class="row animate-box">
-            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <h2>Face And Age Prediction Using CNN - Parental Age Limit</h2>
-                <p>written by <strong>Jo Hyuk Jun</strong></p>
-            </div>
-        </div>
-    <br>
-    <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Face-And-Age-Prediction-Using-CNN-Parental-Age-Limit.pdf" type="application/pdf" width="100%" height="1000px"/>
+      <h2>Face Recognition Using Histogram</h2>
+      <p>written by <strong>Jo Hyuk Jun</strong></p>
 
-    <br><br>
+      <br>
+      <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Histogram.pdf" type="application/pdf" width="100%" height="1000px"/>
 
-    </div>
-</div>
+      <br><br>
 
+      <h2>Moving Detection Using Difference Image</h2>
+      <p>written by <strong>Jo Hyuk Jun</strong></p>
 
-<div id="fh5co-blog">
-    <div class="container">
-        <div class="row animate-box">
-            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <h2>Image Scaling</h2>
-                <p>written by <strong>Jo Hyuk Jun</strong></p>
-            </div>
-        </div>
-    <br>
-    <div class="choose animate-box">
-        <form action = "/image_upload" method = "POST" 
-        enctype = "multipart/form-data">
-        <input type = "file" name = "file" />
-        <br>
-        <br>
-        <input type = "submit"/>
-        </form>
+      <br>
+      <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Moving-Object-Detection-Using-Difference-Image.pdf" type="application/pdf" width="100%" height="1000px"/>
+
+      <br><br>
+
+      <h2>Face And Age Prediction Using CNN - Parental Age Limit</h2>
+      <p>written by <strong>Jo Hyuk Jun</strong></p>
+
+      <br>
+      <embed src="/static/work/project/imageprocessing/pdf/2019-07-31-Face-And-Age-Prediction-Using-CNN-Parental-Age-Limit.pdf" type="application/pdf" width="100%" height="1000px"/>
 
 
     </div>
-
-    <br><br>
+  </div>
 </div>
 
-
-{% endblock %}}
+{% endblock %}

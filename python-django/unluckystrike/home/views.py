@@ -5,6 +5,19 @@ def home_index(request):
     return render(request, 'home_index.html')
 
 
+
+def home_about(request):
+    return render(request, 'about.html')
+
+
+def home_contact(request):
+    return render(request, 'contact.html')
+
+
+def home_works(request):
+    return render(request, 'works.html')
+
+
 def work_detail(request, work):
     if work == 'cognitive-services':
         return render(request, 'cognitive-services.html')
