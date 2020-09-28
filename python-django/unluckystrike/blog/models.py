@@ -22,7 +22,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_list')
     body = RichTextField(blank=True, null=True)
     upload_file = models.FileField(blank=True, null=True, upload_to='blog/')
     created_on = models.DateTimeField(auto_now_add=True)
