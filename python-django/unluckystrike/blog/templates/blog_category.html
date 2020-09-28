@@ -10,10 +10,10 @@
             <h1 class="h2">{{ category | title }}</h1>
           </div>
         </div>
-        <div class="col-md-12 offset-md-2">
+        <div class="col-md-12">
     <hr>
     {% for post in posts %}
-        <h2 class="h2"><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
+        <h2><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
         <br>
         <small>
             {{ post.author }} |&nbsp;
