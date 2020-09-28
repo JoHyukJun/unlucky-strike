@@ -27,7 +27,7 @@ class Post(models.Model):
     upload_file = models.FileField(blank=True, null=True, upload_to='blog/')
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    categories = models.ManyToManyField('Category', blank=True, null=True, related_name='posts')
+    categories = models.ManyToManyField('Category', blank=True, related_name='posts')
     status = models.IntegerField(choices=STATUS, default=1)
 
     class Meta:
