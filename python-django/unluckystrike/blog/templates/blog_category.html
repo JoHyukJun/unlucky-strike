@@ -10,7 +10,7 @@
             <h1 class="h2">{{ category | title }}</h1>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-sm-12">
     <hr>
     {% for post in posts %}
         <h2><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
