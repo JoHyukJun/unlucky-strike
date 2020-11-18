@@ -14,9 +14,14 @@ STATUS = (
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True, null=True)
     
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('blog_category', args=[str(self.name)])
 
 
 class Post(models.Model):
@@ -35,6 +40,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
+
+    def get_absolute_url(self):
+        return reverse('blog_detail', args=[str(self.id)])
     
 
 
@@ -49,4 +57,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return "Comment {} by {}".format(self.body, self.author)
-

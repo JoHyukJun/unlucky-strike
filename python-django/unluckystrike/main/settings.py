@@ -25,7 +25,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'yo8&ym_kff%lynstd)s7iivlu#cga=6%@fu#^kwh_vo)pj4a%t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+
+SITE_ID = 1
 
 ALLOWED_HOSTS = [
     '121.136.146.125',
@@ -44,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # local apps
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'home',
     'projects',
     'blog',
