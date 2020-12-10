@@ -1,7 +1,7 @@
 # web
 ### Author: Jo Hyuk Jun
 #
-![GitHub commit activity](https://img.shields.io/github/commit-activity//JoHyukJun/web)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/JoHyukJun/web)
 #
 
 
