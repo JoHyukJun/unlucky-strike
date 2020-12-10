@@ -3,20 +3,21 @@ from projects.models import Project
 
 
 # Create your views here.
-
 def project_index(request):
-    projects = Project.objects.all()
-    context = {
-        'projects': projects
-    }
-
-    return render(request, 'project_index.html', context)
+    return render(request, 'project_index.html')
 
 
-def project_detail(request, pk):
-    project = Project.objects.get(pk=pk)
-    context = {
-        'project': project
-    }
-
-    return render(request, 'project_detail.html', context)
+def project_detail(request, project):
+    print(project)
+    if project == 'cognitive-services':
+        return render(request, 'cognitive-services.html')
+    elif project == 'image-processing':
+        return render(request, 'image-processing.html')
+    elif project == 'object-detection':
+        return render(request, 'object-detection.html')
+    elif project == 'raspberry-pi-lab':
+        return render(request, 'raspberry-pi-lab.html')
+    elif project == 'deep-learning-for-advanced-driver-assistance-system-applications':
+        return render(request, 'deep-learning-for-advanced-driver-assistance-system-applications.html')
+    else:
+        return render(request, '#')

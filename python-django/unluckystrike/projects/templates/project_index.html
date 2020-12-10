@@ -1,22 +1,122 @@
 {% extends "base.html" %}
 {% load static %}
-{% block page_content %}
-<h1>Projects</h1>
-<div class="row">
-{% for project in projects %}
-    <div class="col-md-4">
-        <div class="card mb-2">
-            <img class="card-img-top" src="{% static project.image %}">
-            <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description }}</p>
-                <a href="{% url 'project_detail' project.pk %}"
-                    class="btn btn-primary">
-                    Read More.
-                </a>
-            </div>
+
+
+{% block content %}
+
+<div class="section-container">
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-sm-8 col-sm-offset-2 section-container-spacer">
+          <div class="text-center">
+            <h1 class="h2">Project</h1>
+            <p>Some projects I did.</p>
+          </div>
         </div>
+  
+        <div class="col-md-12">
+       
+        <div id="myCarousel" class="carousel slide projects-carousel">
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+              <div class="item active">
+                  <div class="row">
+                      <div class="col-sm-4">
+  
+                        <a href="/projects/object-detection" title="" class="black-image-project-hover">
+                          <img src="{% static 'images/cover-01.JPG' %}" alt="" class="img-responsive">
+                        </a>
+                        <div class="card-container card-container-lg">
+                          <h4>001/006</h4>
+                          <h3>Object Detection</h3>
+                          <p>Project.</p>
+                          <a href="/projects/object-detection" title="" class="btn btn-default">Discover</a>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <a href="/projects/raspberry-pi-lab" title="" class="black-image-project-hover">
+                          <img src="{% static 'images/cover-02.JPG' %}" alt="" class="img-responsive">
+                        </a>
+                        <div class="card-container card-container-lg">
+                          <h4>002/006</h4>
+                          <h3>Raspberry Pi</h3>
+                          <p>Project.</p>
+                          <a href="/projects/raspberry-pi-lab" title="" class="btn btn-default">Discover</a>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications" title="" class="black-image-project-hover">
+                          <img src="{% static 'images/cover-03.JPG' %}" alt="" class="img-responsive">
+                        </a>
+                        <div class="card-container card-container-lg">
+                          <h4>003/006</h4>
+                          <h3>jADAS</h3>
+                          <p>Deep Learning for Advanced Driver Assistance System Applications.</p>
+                          <a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications" title="" class="btn btn-default">Discover</a>
+                        </div>
+                      </div>
+                      
+                  </div>
+                  <!--/row-->
+              </div>
+              <!--/item-->
+              <div class="item">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <a href="/projects/image-processing" class="black-image-project-hover">
+                        <img src="{% static 'images/cover-04.JPG' %}" alt="Image" class="img-responsive">
+                      </a>
+                      <div class="card-container">
+                        <h4>004/006</h4>
+                        <h3>Image Processing</h3>
+                        <p>Project.</p>
+                        <a href="/projects/image-processing" class="btn btn-default">Discover</a>
+                      </div>
+                    </div>
+                     <div class="col-sm-4">
+                        <a href="/projects/cognitive-services" class="black-image-project-hover">
+                          <img src="{% static 'images/cover-05.JPG' %}" alt="Image" class="img-responsive">
+                        </a>
+                        <div class="card-container">
+                          <h4>005/006</h4>
+                          <h3>Cognitive Services</h3>
+                          <p>Microsoft Azure API.</p>
+                          <a href="/projects/cognitive-services" class="btn btn-default">Discover</a>
+                        </div>
+                      </div>
+                      
+                      <div class="col-sm-4">
+                        <a href="#" class="black-image-project-hover">
+                          <img src="{% static 'images/cover-03.JPG' %}" alt="Image" class="img-responsive">
+                        </a>
+                        <div class="card-container">
+                          <h4>006/006</h4>
+                          <h3>#</h3>
+                          <p>#</p>
+                          <a href="#" class="btn btn-default">Discover</a>
+                        </div>
+                      </div>
+                      
+                  </div>
+                  <!--/row-->
+              </div>
+              
+              <!--/item-->
+          </div>
+          <!--/carousel-inner--> 
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+  
+          <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+       </div>
+  
+  
+  
+      <!--/myCarousel-->
+      </div>
+  
     </div>
-    {% endfor %}
+  </div>
 </div>
+
 {% endblock %}
