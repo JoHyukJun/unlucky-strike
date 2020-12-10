@@ -32,5 +32,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('blog/', include('blog.urls')),
     path('projects/', include('projects.urls')),
-    path('sitemaps.xml', sitemap, {'sitemaps': sitemaps}, name='sitemaps'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
