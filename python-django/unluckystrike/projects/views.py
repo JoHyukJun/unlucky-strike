@@ -8,7 +8,6 @@ def project_index(request):
 
 
 def project_detail(request, project):
-    print(project)
     if project == 'cognitive-services':
         return render(request, 'cognitive-services.html')
     elif project == 'image-processing':

@@ -13,7 +13,7 @@ class StaticViewSitemap(Sitemap):
             'home_index',
             'home_about',
             'home_contact',
-            'home_works',
+            'project_index',
             'blog_index',
         ]
 
