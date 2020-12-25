@@ -3,4 +3,4 @@
 django
 django-ckeditor
 
-uwsgi
+opencv-python
