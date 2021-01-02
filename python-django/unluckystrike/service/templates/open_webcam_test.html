@@ -24,13 +24,40 @@
           </div>
         </div>
       </div>
-       
+      <video id="video" width="1280" height="720" autoplay></video>
 
-      <a herf="" class="btn btn-default">Run</a>
-      <a href="" class="btn btn-default">Stop</a>
+      <br><br>
 
+      <button type="button" id="webcamRun" class="btn btn-defalut">Run</button>
+      <button type="button" id="webcamStop" class='btn btn-default'>Stop</button>
+      <button type="button" id="webcamCapture" class='btn btn-default'>Capture</button>
+      
+      <br><br>
+      <hr>
 
+      <canvas id="canvas" width="1280" height="720"></canvas>
+      <script>
+        document.getElementById("webcamRun").addEventListener("click", function() {
+          if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+	          navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+		          var video = document.getElementById('video');
+		          video.srcObject = stream;
+		          video.play();
+	          });
+          }
+        });
 
+        document.getElementById("webcamStop").addEventListener("click", function() {
+          video.pause();
+        });
+
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var video = document.getElementById('video');
+        document.getElementById("webcamCapture").addEventListener("click",function() {
+	        context.drawImage(video,0,0,960,720);
+        });
+      </script>
     </div>
   </div>
 </div>
