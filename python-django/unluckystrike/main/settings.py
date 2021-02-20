@@ -34,7 +34,7 @@ SITE_ID = 1
 ALLOWED_HOSTS = [
     '121.167.35.172',
     'localhost',
-    '*.unluckystrike.com',
+    '.unluckystrike.com',
 ]
 
 
