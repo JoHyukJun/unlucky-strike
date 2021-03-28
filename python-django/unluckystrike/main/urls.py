@@ -37,5 +37,4 @@ urlpatterns = [
     path('service/', include('service.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robot.txt', TemplateView.as_view(template_name='robot.txt', content_type='text/plain')),
-    path('naver9a5cbf384efe6620153764cfb7207c3e.html', TemplateView.as_view(template_name='naver9a5cbf384efe6620153764cfb7207c3e.html')),
 ]
