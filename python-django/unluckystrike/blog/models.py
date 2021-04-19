@@ -42,7 +42,7 @@ class Post(models.Model):
         return self.title + ' | ' + str(self.author)
 
     def get_absolute_url(self):
-        return reverse('blog_detail', args=[str(self.id)])
+        return reverse('blog_detail', args=[str(self.id), str(self.title)])
     
 
 
