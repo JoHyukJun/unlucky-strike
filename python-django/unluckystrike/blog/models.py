@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+import urllib
 from ckeditor.fields import RichTextField
 
 
@@ -42,7 +43,7 @@ class Post(models.Model):
         return self.title + ' | ' + str(self.author)
 
     def get_absolute_url(self):
-        return reverse('blog_detail', args=[str(self.id), self.title])
+        return urllib.parse.unquote(reverse('blog_detail', args=[str(self.id), str(self.title)]))
     
 
 
