@@ -39,7 +39,7 @@
     <!-- Issue<hr>
     <p>{{ post.body | safe | slice:":100" }}...</p>
     -->
-    <a href="{% url 'blog_detail' post.pk post.title %}" class="btn btn-default">Discover</a>
+    <a href="{% url 'blog_detail' post.pk %}" class="btn btn-default">Discover</a>
     <br>
     <hr>
     {% endfor %}
