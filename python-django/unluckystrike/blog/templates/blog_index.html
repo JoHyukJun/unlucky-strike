@@ -23,7 +23,7 @@
         <a href="{% url 'blog_detail' post.pk %}" class="btn btn-primary">Read More &rarr;</a>
     </div>
     -->
-    <h2><a href="{% url 'blog_detail' post.pk post.title %}">{{ post.title }}</a></h2>
+    <h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
     <br>
     <small>
         {{ post.author }} |&nbsp;
