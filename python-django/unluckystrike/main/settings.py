@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # local apps
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'main',
     'home',
     'projects',
     'blog',

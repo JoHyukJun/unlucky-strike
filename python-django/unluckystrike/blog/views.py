@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.views.generic import View, ListView, DetailView, FormView, CreateView
 from django.contrib import messages
 
-from blog.models import Post, Comment
+from blog.models import Category, Post, Comment
 from blog.forms import CommentForm
 
 
@@ -68,6 +68,10 @@ class BlogListView(ListView):
         if len(search_keyword) > 1 :
             context['q'] = search_keyword
         context['type'] = search_type
+
+        # Adding categories data.
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(categories=None).count()
 
         return context
 
@@ -167,4 +171,4 @@ def blog_search(request):
 
         return render(request, 'blog_search.html', context)
     else:
-        return render(request, 'blog_search.html', context)
+        return render(request, 'blog_search.html')

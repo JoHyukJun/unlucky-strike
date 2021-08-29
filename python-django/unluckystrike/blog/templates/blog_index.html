@@ -10,7 +10,8 @@
             <h1 class="h2">Blog</h1>
           </div>
         </div>
-        <div class="col-sm-12">
+      
+    <div class="col-md-10">
     <hr>
     {% if not post_list %}
         <h4>No results were found for your search</h4>
@@ -48,6 +49,46 @@
     {% endfor %}
     {% endif %}
 
+    </div>
+
+    <!-- Search -->
+    <form action="" method="GET">
+      <div class="col-md-2">
+        <div style="float: left;" class="form-row">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              <select style="width: 6em;" class="custom-select custom-select-md" name="type">
+                <option value="all">ALL</option>
+                <option value="title">TITLE</option>
+                <option value="content">CONTENT</option>
+              </select>
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <input type="text" name="q" value="{{ q }}" class="form-control form-control-md" placeholder="SEARCH">
+              <button class="btn btn-md" type="submit" id="search_btn">SEARCH</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Categories -->
+    <div class="col-md-2 card mb-4" id="categories-card">
+      <h5 class="card-header">Categories</h5>
+      <div class="card-body">
+        <div class="row">
+          <ul>
+            {% for category in categories %}
+            <li>
+              <a href="{% url 'blog_category' category.name %}"> {{ category.name }} ({{ category.posts.count }})</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+
     <!-- Adding pagination interface.-->
     {% if is_paginated %}
     <ul class="pagination center">
@@ -77,29 +118,6 @@
     {% endif %}
     </ul>
 
-    <form action="" method="GET">
-            <div class="col">
-                <div style="float: left;" class="form-row">
-                    <div class="form-row">
-                        <div class="col" style="margin-top: 10px;">
-                            <select style="width: 6em;" class="custom-select custom-select-md" name="type">
-                                <option value="all">ALL</option>
-                                <option value="title">TITLE</option>
-                                <option value="content">CONTENT</option>
-                            </select>
-                        </div>
-                        <div class="col" style="margin-top: 10px;">
-                            <input type="text" name="q" value="{{ q }}" class="form-control form-control-md" placeholder="SEARCH">
-                            <button class="btn btn-md" type="submit" id="search_btn">SEARCH</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-</form>
-
-      </div>
-    </div>
   </div>
 </div>
 {% endblock %}
