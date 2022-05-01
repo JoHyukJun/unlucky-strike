@@ -32,7 +32,7 @@ DEBUG = True
 SITE_ID = 1
 
 ALLOWED_HOSTS = [
-    '172.31.128.1',
+    '121.160.82.193',
     'localhost',
     '.unluckystrike.com',
 ]
