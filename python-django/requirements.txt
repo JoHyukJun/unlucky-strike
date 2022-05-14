@@ -3,6 +3,9 @@
 django
 django-ckeditor
 
+pycopg2
 opencv-python
 
 python-vlc
+
+gunicorn

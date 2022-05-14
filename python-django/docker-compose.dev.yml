@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: gunicorn main.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 8000:8000
+  env_file:
+    - ./.env.dev
+  depends_on:
+    - db
+db:
+  images: postgres:12.0-alpine
+  volumes:
+    - postgres_data:/var/lib/postresql/data/
+  enviroment:
+    - POSTGRES_USER=johyukjun
+    - POSTGRESPASSWORD=qkqh1214
+    - POSTGRES_DB=unlucky_strike
+volumes:
+  postgres_data:
