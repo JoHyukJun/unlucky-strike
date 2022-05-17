@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     python3-dev \
     libpq-dev \
+    cmake \
     postgresql \
     gcc \
     python3-dev \
