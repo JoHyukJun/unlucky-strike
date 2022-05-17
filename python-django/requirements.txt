@@ -5,6 +5,7 @@ django-ckeditor
 
 psycopg2
 numpy
+cmake
 opencv-contrib-python
 
 python-vlc
