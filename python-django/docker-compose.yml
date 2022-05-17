@@ -4,40 +4,31 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/usr/src/app/_static
-      - media_volume:/usr/src/app/_media
-      - ./data/certbot/conf:/etc/letsencrpt
-      - ./data/certbot/www:/var/www/certbot
+      - static_volume:/usr/src/app/unluckystrike/static
+      - media_volume:/usr/src/app/unluckystrike/media
     ports:
       - 80:80
-      - 443:443
     depends_on:
-      - web 
-    certbot:
-      image: certbot/certbot
-      entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-      volumes:
-        - ./data/certbot/conf:/etc/letsencrpt
-        - ./data/certbot/www:/var/www/certbot
+      - web
   web:
     build: .
-    command: gunicorn main.wsgi:application --bind 0.0.0.0:8000
+    command: sh -c "cd ./unluckystrike && gunicorn main.wsgi:application --bind 0.0.0.0:8000"
     volumes:
+      - static_volume:/usr/src/app/unluckystrike/static
+      - media_volume:/usr/src/app/unluckystrike/media
       - ./:/usr/src/app/
-      - static_volume:/usr/src/app/_static
-      - media_volume:/usr/src/app/_media
     expose:
       - 8000
     env_file:
-      - ./.env.prod
+      - ./unluckystrike/.env.prod
     depends_on:
       - db
-db:
-  images: postgres:12.0-alpine
-  volumes:
-    - postgres_data:/var/lib/postresql/data/
-  env_file:
-    - ./.env.prod.db
+  db:
+    image: postgres:14.2
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./unluckystrike/.env.prod.db
 volumes:
   postgres_data:
   static_volume:

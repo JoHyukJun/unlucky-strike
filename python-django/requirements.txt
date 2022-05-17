@@ -3,7 +3,8 @@
 django
 django-ckeditor
 
-pycopg2
+psycopg2
+numpy
 opencv-python
 
 python-vlc

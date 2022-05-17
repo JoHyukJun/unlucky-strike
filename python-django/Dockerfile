@@ -1,12 +1,20 @@
-FROM python:3.10.4
+FROM python:3.10.4-slim-buster
 
 WORKDIR /usr/src/app
 
 ENV PYTHONDOWNTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apk update
-RUN apk add postgresql-dev gcc python3-dev musl-dev zlib-dev jpeg-dev
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    libpq-dev \
+    postgresql \
+    gcc \
+    python3-dev \
+    musl-dev \
+    git \
+    locales
 
 COPY . /usr/src/app/
 
