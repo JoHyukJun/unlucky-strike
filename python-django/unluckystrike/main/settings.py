@@ -35,7 +35,7 @@ if os.environ.get('DJANGO_ALLOWED_HOSTS'):
 else:
     ALLOWED_HOSTS = []
 
-ALLOWED_ORIGINS = ['http://*.unluckystrike.com', 'https://*.unluckystrike.com']
+ALLOWED_ORIGINS = ['http://unluckystrike.com', 'https://unluckystrike.com']
 CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
 
 
