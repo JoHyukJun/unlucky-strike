@@ -3,6 +3,7 @@
 #
 
 ## Version
+### local
 - conda     4.12.0
 - python    3.10.4
 - django    4.0.4

@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'blog',
     'service',
     # addon apps
+    'rest_framework',
+    'drf_yasg',
     'ckeditor',
 ]
 

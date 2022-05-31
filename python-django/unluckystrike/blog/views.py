@@ -1,6 +1,7 @@
 from django.core import paginator
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
+#from rest_framework import generics
 from django.db.models import Q
 from django.views.generic import View, ListView, DetailView, FormView, CreateView
 from django.contrib import messages
