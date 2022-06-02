@@ -75,7 +75,7 @@ class Fishingram(APIView):
             req_data = requests.get(open_api_url, params)
             api_data = json.loads(req_data.text)
 
-            if api_data['FISHPLCINFO'][0]['head'][1]['RESULT']['CODE'] == 'INFO-000':
+            if api_data['FISHPLCINFO'][0]['head'][1]['RESULT']['CODE'] != 'INFO-000':
                 return render(request, "fishingram.html")
 
             total_cnt = api_data['FISHPLCINFO'][0]['head'][0]['list_total_count']
