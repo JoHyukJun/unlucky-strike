@@ -23,6 +23,7 @@ services:
     build: .
     command: sh -c "cd ./unluckystrike && gunicorn main.wsgi:application --bind 0.0.0.0:8000"
     volumes:
+      - .:/usr/src/app
       - static_volume:/usr/src/app/unluckystrike/static
       - media_volume:/usr/src/app/unluckystrike/media
     expose:
