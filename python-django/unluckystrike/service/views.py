@@ -49,7 +49,6 @@ class Fishingram(APIView):
         
         낚시터 정보
         공공데이터포털 OPEN API
-        https://www.data.go.kr
         
         '''
         

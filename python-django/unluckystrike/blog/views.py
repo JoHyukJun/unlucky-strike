@@ -72,7 +72,7 @@ class BlogListView(ListView):
 
         # Adding categories data.
         context['categories'] = Category.objects.all()
-        context['no_category_post_count'] = Post.objects.filter(categories=None).count()
+        context['no_category_post_count'] = Post.objects.filter(status=1, categories=None).count()
 
         return context
 
