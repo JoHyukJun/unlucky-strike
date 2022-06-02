@@ -14,7 +14,6 @@ import sys
 
 
 SERVER_TIME = datetime.datetime.now()
-
 UPDATE_DATE = ['01-01', '04-01', '07-01', '10-01']
 
 
@@ -48,7 +47,9 @@ class Fishingram(APIView):
 
         '''
         
-        낚시터 정보 OPEN-API
+        낚시터 정보
+        공공데이터포털 OPEN API
+        https://www.data.go.kr
         
         '''
         
