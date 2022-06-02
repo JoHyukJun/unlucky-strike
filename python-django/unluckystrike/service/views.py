@@ -71,9 +71,13 @@ class Fishingram(APIView):
 
         valid_ckr = FishingPlaceInfoData.objects.count()
 
-        if (valid_ckr == 0 and api_data['FISHPLCINFO'][0]['head'][1]['RESULT']['CODE'] == 'INFO-000'):
+        if (valid_ckr == 0):
             req_data = requests.get(open_api_url, params)
             api_data = json.loads(req_data.text)
+
+            if api_data['FISHPLCINFO'][0]['head'][1]['RESULT']['CODE'] == 'INFO-000':
+                return render(request, "fishingram.html")
+
             total_cnt = api_data['FISHPLCINFO'][0]['head'][0]['list_total_count']
 
             for i in range(total_cnt):
