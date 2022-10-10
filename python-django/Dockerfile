@@ -2,7 +2,7 @@ FROM python:3.10.4-slim-buster
 
 WORKDIR /usr/src/app
 
-ENV PYTHONDOWNTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && apt-get install -y \
