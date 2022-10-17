@@ -29,6 +29,7 @@ services:
       - media_volume:/usr/src/app/unluckystrike/media
     expose:
       - 8000
+    restart: always
     env_file:
       - ./unluckystrike/.env.prod
     depends_on:
