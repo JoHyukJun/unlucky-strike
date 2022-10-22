@@ -6,7 +6,7 @@
 
 
 ## Introduction
-This project is being developed using Python and is aimed at creating web apps.
+This project is being developed using Python Django and is aimed at creating web apps.
 #
 ## Information
 - Current website address: www.unluckystrike.com
