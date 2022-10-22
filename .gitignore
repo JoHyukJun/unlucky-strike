@@ -127,6 +127,7 @@ dmypy.json
 # Custom
 .DS_Store
 .vscode/
+.static/
 migrations/
 secrets.py
 .env.prod
