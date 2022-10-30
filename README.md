@@ -1,7 +1,7 @@
 # unlucky-strike
 ### Author: Jo Hyuk Jun
 #
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/JoHyukJun/web)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/JoHyukJun/unlucky-strike)
 #
 
 
