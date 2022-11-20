@@ -24,8 +24,8 @@ def service_index(request):
 def service_detail(request, service):
     if service == 'open-webcam-test':
         return render(request, 'open-webcam-test.html')
-    elif service == 'random-access-music':
-        return render(request, 'random-access-music.html')
+    elif service == 'aimyon':
+        return render(request, 'aimyon.html')
     elif service == 'fishingram':
         return fishingram(request)
     else:
@@ -36,8 +36,8 @@ def open_webcam_test(request):
     return render(request, 'open-webcam-test.html')
 
 
-def random_access_music(request):
-    return render(request, 'random-access-music.html')
+def aimyon(request):
+    return render(request, 'aimyon.html')
 
 
 class Fishingram(APIView):
