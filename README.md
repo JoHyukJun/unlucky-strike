@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/JoHyukJun/unlucky-strike">
-    <img src="images/logo.png" alt="Logo" width="480" height="480">
+    <img src="images/logo.png" alt="Logo" width="360" height="360">
   </a>
 
   <h3 align="center">unlucky-strike</h3>
