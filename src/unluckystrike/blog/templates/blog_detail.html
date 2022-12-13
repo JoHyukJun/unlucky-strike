@@ -27,7 +27,7 @@
     <p>{{ post.body | safe }}</p>
 
     <h4>Leave a comment:</h4>
-    <form action="/blog/{{ post.pk }}/" method="post">
+    <form action="/blog/{{ post.pk }}" method="post">
         {% csrf_token %}
         <div class="form-group">
             {{ form.author }}
