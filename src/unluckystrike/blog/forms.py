@@ -15,3 +15,10 @@ class CommentForm(forms.Form):
             "placeholder": "Leave a comment."
         }
     ))
+    verification = forms.CharField(
+        max_length = 10,
+        widget = forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Input code"
+        })
+    )
