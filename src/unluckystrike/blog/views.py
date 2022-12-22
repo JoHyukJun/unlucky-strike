@@ -9,6 +9,8 @@ from django.contrib import messages
 from blog.models import Category, Post, Comment
 from blog.forms import CommentForm
 
+import random
+
 
 # Create your views here.
 
@@ -120,6 +122,7 @@ def blog_category(request, category):
 def blog_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     form = CommentForm()
+    comment_validator = (random.randint(10, 99))
     
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -130,7 +133,11 @@ def blog_detail(request, pk):
                 body=form.cleaned_data["body"],
                 post=post
             )
-            comment.save()
+
+            current_comment_validator = request.POST['current_comment_validator']
+
+            if form.cleaned_data["verification"] == current_comment_validator:
+                comment.save()
 
     comments = Comment.objects.filter(post=post)
 
@@ -138,6 +145,7 @@ def blog_detail(request, pk):
         "post": post,
         "comments": comments,
         "form": form,
+        "comment_validator": comment_validator
     }
 
     return render(request, "blog_detail.html", context)
