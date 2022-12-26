@@ -138,6 +138,9 @@ def blog_detail(request, pk):
 
             if form.cleaned_data["verification"] == current_comment_validator:
                 comment.save()
+            else:
+                print('INVALID COMMENT VERIFICATION CODE REQUEST')
+                messages.warning(request, 'INVALID COMMENT VERIFICATION CODE REQUEST')
 
     comments = Comment.objects.filter(post=post)
 

@@ -19,6 +19,6 @@ class CommentForm(forms.Form):
         max_length = 10,
         widget = forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Input code"
+            "placeholder": "Input verification code"
         })
     )

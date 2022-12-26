@@ -27,6 +27,11 @@
     <p>{{ post.body | safe }}</p>
 
     <h4>Leave a comment:</h4>
+    {% if messages %}
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+    {% endif %}
     <form action="/blog/{{ post.pk }}" method="post">
         {% csrf_token %}
         <div class="form-group">
