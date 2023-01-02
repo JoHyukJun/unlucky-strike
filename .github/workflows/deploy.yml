@@ -23,6 +23,6 @@ jobs:
           port: ${{ secrets.UNLUCKYSTRIKE_PORT }}
           username: ${{ secrets.UNLUCKYSTRIKE_USERNAME }}
           password: ${{ secrets.UNLUCKYSTRIKE_PASSWORD }}
-        script: |
-          git pull && cd ./src
-          docker-compose restart
+          script: |
+            git pull && cd ./src
+            docker-compose restart
