@@ -1,0 +1,28 @@
+name: DEPLOY ON RASPBERRYPI SERVER
+concurrency: production
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    env:
+      working-directory: ./src
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: SSH command init
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.UNLUCKYSTRIKE_HOST }}
+          port: ${{ secrets.UNLUCKYSTRIKE_PORT }}
+          username: ${{ secrets.UNLUCKYSTRIKE_USERNAME }}
+          password: ${{ secrets.UNLUCKYSTRIKE_PASSWORD }}
+        scripts: |
+          git pull && cd ./src
+          docker-compose restart
