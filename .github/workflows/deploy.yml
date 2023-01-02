@@ -24,5 +24,6 @@ jobs:
           username: ${{ secrets.UNLUCKYSTRIKE_USERNAME }}
           password: ${{ secrets.UNLUCKYSTRIKE_PASSWORD }}
           script: |
-            git pull && cd ./src
+            cd ${{ secrets.UNLUCKYSTRIKE_PATH }} && git pull
+            cd ./src
             docker-compose restart
