@@ -26,4 +26,6 @@ jobs:
           script: |
             cd ${{ secrets.UNLUCKYSTRIKE_PATH }} && git pull
             cd ./src
+            ./backup.sh
+            docker-compose exec web python ./unluckystrike/manage.py collectstatic
             docker-compose restart
