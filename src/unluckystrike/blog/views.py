@@ -107,16 +107,40 @@ def blog_index(request):
 
 
 def blog_category(request, category):
-    post_list = Post.objects.filter(status=1,
+    posts = Post.objects.filter(status=1,
         categories__name__contains=category
     ).order_by('-created_on')
 
-    context = {
-        "category": category,
-        "post_list": post_list
-    }
+    posts = Post.objects.filter(status=1).order_by('-created_on')
 
-    return render(request, "blog_category.html", context)
+    search_keyword = request.POST.get('q', '')
+
+    if search_keyword:
+        posts = posts.filter(title__icontains=search_keyword)
+
+        # Adding pagination using function based views.
+        paginator = Paginator(posts, 5)
+        page = request.GET.get('page')
+
+        try:
+            post_list = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer deliver the first page.
+            post_list = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range deliver last page of results.
+            post_list = paginator.page(paginator.num_pages)
+
+        context = {
+            "page": page,
+            "post_list": post_list,
+            "q": search_keyword,
+            "category": category
+        }
+
+        return render(request, "blog_category.html", context)
+    else:
+        return render(request, "blog_category.html", context)
 
 
 def blog_detail(request, pk):
