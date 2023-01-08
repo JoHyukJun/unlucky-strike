@@ -111,8 +111,6 @@ def blog_category(request, category):
         categories__name__contains=category
     ).order_by('-created_on')
 
-    posts = Post.objects.filter(status=1).order_by('-created_on')
-
     search_keyword = request.POST.get('q', '')
 
     if search_keyword:
@@ -140,6 +138,26 @@ def blog_category(request, category):
 
         return render(request, "blog_category.html", context)
     else:
+        # Adding pagination using function based views.
+        paginator = Paginator(posts, 5)
+        page = request.GET.get('page')
+
+        try:
+            post_list = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer deliver the first page.
+            post_list = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range deliver last page of results.
+            post_list = paginator.page(paginator.num_pages)
+
+        context = {
+            "page": page,
+            "post_list": post_list,
+            "q": search_keyword,
+            "category": category
+        }
+        
         return render(request, "blog_category.html", context)
 
 
