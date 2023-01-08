@@ -107,13 +107,13 @@ def blog_index(request):
 
 
 def blog_category(request, category):
-    posts = Post.objects.filter(status=1,
+    post_list = Post.objects.filter(status=1,
         categories__name__contains=category
     ).order_by('-created_on')
 
     context = {
         "category": category,
-        "posts": posts
+        "post_list": post_list
     }
 
     return render(request, "blog_category.html", context)
