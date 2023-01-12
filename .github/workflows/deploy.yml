@@ -28,5 +28,5 @@ jobs:
             cd ./src
             echo $PWD
             bash backup.sh
-            echo yes | docker-compose exec web python ./unluckystrike/manage.py collectstatic
+            echo yes | docker-compose exec -T web python ./unluckystrike/manage.py collectstatic
             docker-compose restart
