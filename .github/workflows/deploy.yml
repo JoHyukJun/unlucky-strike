@@ -27,6 +27,6 @@ jobs:
             cd ${{ secrets.UNLUCKYSTRIKE_PATH }} && git pull
             cd ./src
             echo $PWD
-            sh backup.sh
+            bash backup.sh
             echo yes | docker-compose exec web python ./unluckystrike/manage.py collectstatic
             docker-compose restart
