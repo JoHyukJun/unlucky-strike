@@ -1,1 +1,1 @@
-docker-compose exec web python ./unluckystrike/manage.py dumpdata blog > db_backup.json
+docker-compose exec -T web python ./unluckystrike/manage.py dumpdata blog > db_backup.json
