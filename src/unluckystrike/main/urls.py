@@ -50,6 +50,11 @@ sitemaps = {
     'static': StaticViewSitemap,
 }
 
+# admin page custom
+admin.site.site_header = "UNLUCKY STRIKE"
+admin.site.index_title = "MASTER MODE"
+#admin.site.site_header = "?"
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
