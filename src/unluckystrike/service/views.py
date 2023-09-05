@@ -24,8 +24,8 @@ def service_index(request):
 def service_detail(request, service):
     if service == 'open-webcam-test':
         return render(request, 'open-webcam-test.html')
-    elif service == 'aimyon':
-        return render(request, 'aimyon.html')
+    elif service == 'gusig':
+        return render(request, 'gusig.html')
     elif service == 'fishingram':
         return fishingram(request)
     else:
@@ -36,8 +36,8 @@ def open_webcam_test(request):
     return render(request, 'open-webcam-test.html')
 
 
-def aimyon(request):
-    return render(request, 'aimyon.html')
+def gusig(request):
+    return render(request, 'gusig.html')
 
 
 class Fishingram(APIView):
