@@ -7,6 +7,10 @@ class Service(models.Model):
     pass
 
 
+class GusigPlaceInfoData(models.Model):
+    pass
+
+
 class FishingPlaceInfoData(models.Model):
     sigun_name = models.CharField(max_length=255)
     sigun_code = models.IntegerField(null=True)
