@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title%}{{ post.title }} {% for category in post.categories.all %}|{{ category.name }}{% endfor %} - Unlucky Strike{% endblock title %}
+{% block title%}{{ post.title }}{% for category in post.categories.all %} | {{ category.name }}{% endfor %} - Unlucky Strike{% endblock title %}
 
 {% block content %}
 <div class="section-container">
