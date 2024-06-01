@@ -1,3 +1,4 @@
+/*! 98.css v0.1.19 - https://github.com/jdan/98.css */
 /**
  * 98.css
  * Copyright (c) 2020 Jordan Scales <thatjdanisso.cool>
@@ -6,6 +7,7 @@
 
  :root {
     /* Color */
+    --text-color: #222222;
     --surface: #c0c0c0;
     --button-highlight: #ffffff;
     --button-face: #dfdfdf;
@@ -68,6 +70,12 @@
     --border-field: inset -1px -1px var(--button-highlight),
       inset 1px 1px var(--button-shadow), inset -2px -2px var(--button-face),
       inset 2px 2px var(--window-frame);
+  
+    /* Tabs */
+    --border-tab: inset -1px 0 var(--window-frame),
+      inset 1px 1px var(--button-face),
+      inset -2px 0 var(--button-shadow),
+      inset 2px 2px var(--button-highlight)
   }
   
   @font-face {
@@ -89,7 +97,7 @@
   body {
     font-family: Arial;
     font-size: 12px;
-    color: #222222;
+    color: var(--text-color);
   }
   
   button,
@@ -98,6 +106,7 @@
   textarea,
   select,
   option,
+  table,
   ul.tree-view,
   .window,
   .title-bar {
@@ -132,6 +141,8 @@
   input[type="reset"] {
     box-sizing: border-box;
     border: none;
+    color: transparent;
+    text-shadow: 0 0 var(--text-color);
     background: var(--surface);
     box-shadow: var(--border-raised-outer), var(--border-raised-inner);
     border-radius: 0;
@@ -152,7 +163,7 @@
   input[type="submit"]:not(:disabled):active,
   input[type="reset"]:not(:disabled):active {
     box-shadow: var(--border-sunken-outer), var(--border-sunken-inner);
-    padding: 2px 11px 0 13px;
+    text-shadow: 1px 1px var(--text-color);
   }
   
   @media (not(hover)) {
@@ -178,8 +189,8 @@
   
   :disabled,
   :disabled + label,
-  :read-only,
-  :read-only + label {
+  input[readonly],
+  input[readonly] + label {
     color: var(--button-shadow);
   }
   
@@ -517,6 +528,8 @@
     width: 11px;
     background: svg-load("./icon/indicator-horizontal.svg");
     transform: translateY(-8px);
+    box-shadow: none;
+    border: none;
   }
   
   input[type="range"].has-box-indicator::-webkit-slider-thumb {
@@ -785,3 +798,92 @@
     width: 16px;
     background-image: svg-load("./icon/button-right.svg");
   }
+  
+  .window[role=tabpanel] {
+    position: relative;
+    z-index: 2;
+  }
+  
+  menu[role=tablist] {
+    position: relative;
+    margin: 0 0 -2px 0;
+    text-indent: 0;
+    list-style-type: none;
+    display: flex;
+    padding-left: 3px;
+  }
+  
+  menu[role=tablist] > li {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: var(--border-tab);
+    z-index: 1;
+  }
+  
+  menu[role=tablist] > li[aria-selected=true] {
+    padding-bottom: 2px;
+    margin-top: -2px;
+    background-color: var(--surface);
+    position: relative;
+    z-index: 8;
+    margin-left: -3px;
+  }
+  
+  menu[role=tablist] > li > a {
+    display: block;
+    color: #222;
+    margin: 6px;
+    text-decoration: none;
+  }
+  menu[role=tablist] > li[aria-selected=true] > a:focus {
+    outline: none;
+  }
+  menu[role=tablist] > li > a:focus {
+    outline: 1px dotted #222;
+  }
+  
+  menu[role=tablist].multirows > li {
+    flex-grow: 1;
+    text-align: center;
+  }
+  .sunken-panel {
+    box-sizing: border-box;
+    border: 2px groove transparent;
+    border-image: svg-load("./icon/sunken-panel-border.svg") 2;
+    overflow: auto;
+    background-color: #fff;
+  }
+  
+  table {
+    border-collapse: collapse;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    background-color: #fff;
+  }
+  
+  table > thead > tr > * {
+    position: sticky;
+    top: 0;
+    height: 17px;
+    box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+    background: var(--surface);
+    box-sizing: border-box;
+    font-weight: normal;
+    padding: 0 var(--grouped-element-spacing);
+  }
+  
+  table.interactive > tbody > tr {
+    cursor: pointer;
+  }
+  
+  table > tbody > tr.highlighted {
+    color: #fff;
+    background-color: var(--dialog-blue);
+  }
+  
+  table > tbody > tr > * {
+    padding: 0 var(--grouped-element-spacing);
+    height: 14px;
+  }
+  

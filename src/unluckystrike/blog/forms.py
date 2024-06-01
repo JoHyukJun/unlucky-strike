@@ -5,20 +5,20 @@ class CommentForm(forms.Form):
     author = forms.CharField(
         max_length = 60,
         widget = forms.TextInput(attrs={
-            "class": "form-control",
+            "class": "field-row",
             "placeholder": "Your Name"
         })
     )
     body = forms.CharField(widget=forms.Textarea(
         attrs = {
-            "class": "form-control",
+            "class": "field-row-stacked",
             "placeholder": "Leave a comment."
         }
     ))
     verification = forms.CharField(
         max_length = 10,
         widget = forms.TextInput(attrs={
-            "class": "form-control",
+            "class": "field-row",
             "placeholder": "Input verification code"
         })
     )
