@@ -1,122 +1,112 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
 
-<div class="section-container">
-    <div class="container">
-      <div class="row">
-        
-        <div class="col-sm-8 col-sm-offset-2 section-container-spacer">
-          <div class="text-center">
-            <h1 class="h2">Project</h1>
-            <p>Some projects I did.</p>
-          </div>
+<h2 id="project">Project</h2>
+<section class="component">
+  <div>
+    <div class="window" style="width: 400px">
+      <div class="title-bar">
+        <div class="title-bar-text">Object Detection</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
         </div>
-  
-        <div class="col-md-12">
-       
-        <div id="myCarousel" class="carousel slide projects-carousel">
-          <!-- Carousel items -->
-          <div class="carousel-inner">
-              <div class="item active">
-                  <div class="row">
-                      <div class="col-sm-4">
-  
-                        <a href="/projects/object-detection" title="" class="black-image-project-hover">
-                          <img src="{% static 'projects/images/cover-01.JPG' %}" alt="Image" class="img-responsive">
-                        </a>
-                        <div class="card-container card-container-lg">
-                          <h4>001/006</h4>
-                          <h3>Object Detection</h3>
-                          <p>Project.</p>
-                          <a href="/projects/object-detection" title="" class="btn btn-default">Discover</a>
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <a href="/projects/raspberry-pi-lab" title="" class="black-image-project-hover">
-                          <img src="{% static 'projects/images/cover-02.JPG' %}" alt="Image" class="img-responsive">
-                        </a>
-                        <div class="card-container card-container-lg">
-                          <h4>002/006</h4>
-                          <h3>Raspberry Pi</h3>
-                          <p>Project.</p>
-                          <a href="/projects/raspberry-pi-lab" title="" class="btn btn-default">Discover</a>
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications" title="" class="black-image-project-hover">
-                          <img src="{% static 'projects/images/cover-03.JPG' %}" alt="Image" class="img-responsive">
-                        </a>
-                        <div class="card-container card-container-lg">
-                          <h4>003/006</h4>
-                          <h3>jADAS</h3>
-                          <p>Deep Learning for Advanced Driver Assistance System Applications.</p>
-                          <a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications" title="" class="btn btn-default">Discover</a>
-                        </div>
-                      </div>
-                      
-                  </div>
-                  <!--/row-->
-              </div>
-              <!--/item-->
-              <div class="item">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <a href="/projects/image-processing" class="black-image-project-hover">
-                        <img src="{% static 'projects/images/cover-04.JPG' %}" alt="Image" class="img-responsive">
-                      </a>
-                      <div class="card-container">
-                        <h4>004/006</h4>
-                        <h3>Image Processing</h3>
-                        <p>Project.</p>
-                        <a href="/projects/image-processing" class="btn btn-default">Discover</a>
-                      </div>
-                    </div>
-                     <div class="col-sm-4">
-                        <a href="/projects/cognitive-services" class="black-image-project-hover">
-                          <img src="{% static 'projects/images/cover-05.JPG' %}" alt="Image" class="img-responsive">
-                        </a>
-                        <div class="card-container">
-                          <h4>005/006</h4>
-                          <h3>Cognitive Services</h3>
-                          <p>Microsoft Azure API.</p>
-                          <a href="/projects/cognitive-services" class="btn btn-default">Discover</a>
-                        </div>
-                      </div>
-                      
-                      <div class="col-sm-4">
-                        <a href="#" class="black-image-project-hover">
-                          <img src="{% static 'projects/images/cover-03.JPG' %}" alt="Image" class="img-responsive">
-                        </a>
-                        <div class="card-container">
-                          <h4>006/006</h4>
-                          <h3>#</h3>
-                          <p>#</p>
-                          <a href="#" class="btn btn-default">Discover</a>
-                        </div>
-                      </div>
-                      
-                  </div>
-                  <!--/row-->
-              </div>
-              
-              <!--/item-->
-          </div>
-          <!--/carousel-inner--> 
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-  
-          <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-       </div>
-  
-  
-  
-      <!--/myCarousel-->
       </div>
-  
+      <div class="window-body">
+        <p>Real-Time Object Detection Using CNN On Mobile Device</p>
+        <section class="field-row" style="justify-content: flex-end">
+          <button><a href="/projects/object-detection">View</a></button>
+        </section>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<section class="component">
+  <div>
+    <div class="window" style="width: 400px">
+      <div class="title-bar">
+        <div class="title-bar-text">Raspberry Pi</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>Deep Learning for Smoking Detection Intelligent CCTV</p>
+        <section class="field-row" style="justify-content: flex-end">
+          <button><a href="/projects/raspberry-pi-lab">View</a></button>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="component">
+  <div>
+    <div class="window" style="width: 400px">
+      <div class="title-bar">
+        <div class="title-bar-text">jADAS</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>Deep Learning for Advanced Driver Assistance System Applications</p>
+        <section class="field-row" style="justify-content: flex-end">
+          <button><a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications">View</a></button>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="component">
+  <div>
+    <div class="window" style="width: 400px">
+      <div class="title-bar">
+        <div class="title-bar-text">Image Processing</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>Image Processing</p>
+        <section class="field-row" style="justify-content: flex-end">
+          <button><a href="/projects/image-processing">View</a></button>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="component">
+  <div>
+    <div class="window" style="width: 400px">
+      <div class="title-bar">
+        <div class="title-bar-text">Cognitive Services</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p>Microsoft Azure API</p>
+        <section class="field-row" style="justify-content: flex-end">
+          <button><a href="/projects/cognitive-services">View</a></button>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
