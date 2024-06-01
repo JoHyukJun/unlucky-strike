@@ -3,61 +3,57 @@
 {% block title%}{{ post.title }}{% for category in post.categories.all %} | {{ category.name }}{% endfor %} - Unlucky Strike{% endblock title %}
 
 {% block content %}
-<div class="section-container">
-<div class="container">
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2 section-container-spacer">
-          <div class="text-center">
-            <h1 class="h2">{{ post.title }}</h1>
-          </div>
-        </div>
-        <div class="col-sm-12">
-    <small>
-        {{ post.author | upper}} |&nbsp;
-        {{ post.created_on.date }} |&nbsp;
-        Categories:&nbsp;
-        {% for category in post.categories.all %}
-        <a href="{% url 'blog_category' category.name %}">
-            {{ category.name }}
-        </a>&nbsp;
-        {% endfor %}
-    </small>
-    <hr>
 
-    <p>{{ post.body | safe }}</p>
-
-    <h4>Leave a comment:</h4>
-    {% if messages %}
-    {% for message in messages %}
-    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+<h2 id="post-title">{{ post.title }}</h2>
+  <small>
+    {{ post.author | upper}} |&nbsp;
+    {{ post.created_on.date }} |&nbsp;
+    Categories:&nbsp;
+    {% for category in post.categories.all %}
+    <a href="{% url 'blog_category' category.name %}">
+        {{ category.name }}
+    </a>&nbsp;
     {% endfor %}
-    {% endif %}
-    <form action="/blog/{{ post.pk }}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.author }}
-        </div>
-        <div class="form-group">
-            {{ form.body }}
-        </div>
-        <h4>Validation Code: {{ comment_validator }}</h4>
-        <div class="form-group">
-            {{ form.verification }}
-        </div>
-        <input type="hidden" name="current_comment_validator" value="{{ comment_validator }}">
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-    <h3>Comments:</h3>
+  </small>
+<hr>
+
+<section class="component">
+  <div>
+    {{ post.body | safe }}
+  </div>
+</section>
+
+<section class="component">
+  <h3>Comments</h3>
+  <div>
     {% for comment in comments %}
+    <blockquote>
     <p>
-        On {{comment.created_on.date }}&nbsp;
-        <b>{{ comment.author }}</b> wrote:
+      On {{comment.created_on.date }}&nbsp;
+      <b>{{ comment.author }}</b> wrote:
     </p>
     <p>{{ comment.body }}</p>
-    <hr>
+    </blockquote>
     {% endfor %}
-</div>
-</div>
-</div>
-</div>
+
+    <form action="/blog/{{ post.pk }}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+          {{ form.author }}
+      </div>
+      <br>
+      <div class="form-group">
+          {{ form.body }}
+      </div>
+      <p>Validation Code: {{ comment_validator }}</p>
+      <div class="form-group">
+          {{ form.verification }}
+      </div>
+      <input type="hidden" name="current_comment_validator" value="{{ comment_validator }}">
+      <br>
+      <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+  </div>
+</section>
+
 {% endblock %}

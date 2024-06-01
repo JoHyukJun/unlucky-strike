@@ -3,91 +3,63 @@
 
 {% block content %}
 
+<h2 id="cognitive-services">Image Processing</h2>
+<hr>
+<section class="component">
+  <h3>Face Detection</h3>
+  <div>
+    <p>Enter the URL to an image that includes a face or faces, then click the <strong>Analyze face</strong> button.</p>
 
-<div class="section-container">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <img src="{% static 'projects/images/cover-05.JPG' %}" class="img-responsive" alt="">
-        <div class="card-container">
-          <div class="text-center">
-            <h1 class="h2">005 : Cognitive Services</h1>
-          </div>
-
-          <div class="text-center">
-          <a href="http://khuhub.khu.ac.kr/2014104152/FaceDetection" title="" class="fa-icon">
-            <i class="fa fa-github"></i>
-          </a>
-
-          <a href="https://docs.microsoft.com/ko-kr/azure/cognitive-services/face/overview" title="" class="fa-icon">
-            <i class="fa fa-info"></i>
-          </a>
-          </div>
-        </div>
-      </div>
-
-      
-
-      <h2>Face Detection</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-
-      <br>
-      <p>Enter the URL to an image that includes a face or faces, then click the <strong>Analyze face</strong> button.</p>
-
-      Image to analyze: <input type="text" name="inputImage" id="inputImage" value="http://image.xportsnews.com/contents/images/upload/article/2016/1028/1477605658625406.jpg" />
-      <button onclick="processImage()">Analyze face</button>
-      <br><br>
-      <div id="wrapper" style="width:1020px; display:table;">
-          <div id="imageDiv" style="width:420px; display:table-cell;">
-          Source image:
-          <br><br>
-          <canvas id="sourceImage"></canvas>       
-          <canvas id="tooltip" width="280" height="180" style="display:none;position:absolute;background-color:orange;"></canvas> 
-        </div>
-      </div>
-
-      <br><br>
-
-      <h2>Extract Printed Text</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-
-      <br>
-      <p>Enter the URL to an image that includes a printed text, then click the <strong>Analyze printed text</strong> button.</p>
-
-      Image to analyze: <input type="text" name="inputTextImage" id="inputTextImage" value="https://jsbin.firejune.com/assets/tesseract/eng_bw.png" />
-      <button onclick="extractPrintedTextImage()">Analyze printed text</button>
-      <br><br>
-      <div id="wrapper" style="width:1020px; display:table;">
+    Image to analyze: <input type="text" name="inputImage" id="inputImage" value="http://image.xportsnews.com/contents/images/upload/article/2016/1028/1477605658625406.jpg" />
+    <button onclick="processImage()">Analyze face</button>
+    <br><br>
+    <div id="wrapper" style="width:1020px; display:table;">
         <div id="imageDiv" style="width:420px; display:table-cell;">
-          Source image:
-          <br><br>
-          <canvas id="sourceTextImage"></canvas>
-          <canvas id="tooltipTI" width="200" height="50" style="display:none;position:absolute;background-color:orange;"></canvas>
-        </div>
+        Source image:
+        <br><br>
+        <canvas id="sourceImage"></canvas>       
+        <canvas id="tooltip" width="280" height="180" style="display:none;position:absolute;background-color:orange;"></canvas> 
       </div>
-
-      <br><br>
-
-      <h2>Analyze Image</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-
-      <br>
-      <p>Enter the URL to an image, then click the <strong>Analyze image</strong> button.</p>
-
-      Image to analyze: <input type="text" name="inputAnalyzeImage" id="inputAnalyzeImage" value="https://www.udiscovermusic.com/wp-content/uploads/2014/12/Beatles-dior.jpg" />
-      <button onclick="analyzeImage()">Analyze image</button>
-      <br><br>
-      <div id="wrapper" style="width:1020px; display:table;">
-        <div id="imageDiv" style="width:420px; display:table-cell;">
-          Source image:
-          <br><br>
-          <canvas id="sourceAnalyzeImage"></canvas>       
-          <canvas id="tooltipAI" width="250" height="50" style="display:none;position:absolute;background-color:orange;"></canvas> 
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
+</section>
+
+<section class="component">
+  <h3>Extract Printed Text</h3>
+  <div>
+    <p>Enter the URL to an image that includes a printed text, then click the <strong>Analyze printed text</strong> button.</p>
+
+    Image to analyze: <input type="text" name="inputTextImage" id="inputTextImage" value="https://jsbin.firejune.com/assets/tesseract/eng_bw.png" />
+    <button onclick="extractPrintedTextImage()">Analyze printed text</button>
+    <br><br>
+    <div id="wrapper" style="width:1020px; display:table;">
+      <div id="imageDiv" style="width:420px; display:table-cell;">
+        Source image:
+        <br><br>
+        <canvas id="sourceTextImage"></canvas>
+        <canvas id="tooltipTI" width="200" height="50" style="display:none;position:absolute;background-color:orange;"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="component">
+  <h3>Analyze Image</h3>
+  <div>
+    <p>Enter the URL to an image, then click the <strong>Analyze image</strong> button.</p>
+
+    Image to analyze: <input type="text" name="inputAnalyzeImage" id="inputAnalyzeImage" value="https://www.udiscovermusic.com/wp-content/uploads/2014/12/Beatles-dior.jpg" />
+    <button onclick="analyzeImage()">Analyze image</button>
+    <br><br>
+    <div id="wrapper" style="width:1020px; display:table;">
+      <div id="imageDiv" style="width:420px; display:table-cell;">
+        Source image:
+        <br><br>
+        <canvas id="sourceAnalyzeImage"></canvas>       
+        <canvas id="tooltipAI" width="250" height="50" style="display:none;position:absolute;background-color:orange;"></canvas> 
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

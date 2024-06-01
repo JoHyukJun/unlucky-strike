@@ -4,9 +4,6 @@ django
 django-ckeditor
 djangorestframework
 
-psycopg2
-
-python-vlc
 requests
 drf-yasg
 

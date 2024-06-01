@@ -4,63 +4,32 @@
 {% block content %}
 
 
-<div class="section-container">
-  <div class="container">
-<div class="row">
-  <div class="col-xs-12">
-    <div class="section-container-spacer text-center">
-      <h1 class="h2">Contact me</h1>
-    </div>
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <form action="" class="reveal-content">
-          <div class="row">
-            <div class="col-md-7">
-              <div class="form-group">
-                <input type="email" class="form-control" id="email" placeholder="Email">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" id="subject" placeholder="Subject">
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" placeholder="Enter your message"></textarea>
-              </div>
-              <button type="submit" href="mailto:hyukzuny@gmail.com" class="btn btn-default btn-lg">Send</button>
-            </div>
-            <div class="col-md-5 address-container">
-              <ul class="list-unstyled">
-                <li>
-                  <span class="fa-icon">
-                    <i class="fa fa-phone" aria-hidden="true"></i>
-                  </span>
-                  ASK ME.
-                </li>
-                <li>
-                  <span class="fa-icon">
-                    <i class="fa fa-at" aria-hidden="true"></i>
-                  </span>
-                  decibel@kakao.com
-                </li>
-                <li>
-                  <span class="fa-icon">
-                    <i class="fa fa fa-map-marker" aria-hidden="true"></i>
-                  </span>
-                  Yongsan-gu, Seoul, Republic of Korea
-                </li>
-              </ul>
-              <h3>Follow me on social networks</h3>
-              <a href="https://github.com/JoHyukJun" title="" class="fa-icon">
-                <i class="fa fa-github"></i>
-              </a>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
 
+<h2 id="contact">Contact</h2>
+<hr>
+<section class="component">
+  <h3 id="info">Info</h3>
+  <div>
+    <div class="field-row-stacked" style="width: 400px">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="Email"/>
+    </div>
+    <div class="field-row-stacked" style="width: 400px">
+      <label for="subject">Subject</label>
+      <input id="subject" type="text" placeholder="Subject"/>
+    </div>
+    <div class="field-row-stacked" style="width: 400px">
+      <label for="message">Message</label>
+      <textarea id="message" rows="8" placeholder="Enter your message"></textarea>
+    </div>
+    <br>
+    <button disabled type="submit" href="mailto:decibel@kakao.com">Send</button>
+
+    <p>
+      <li><a href="mailto:decibel@kakao.com">decibel@kakao.com</a></li>
+      <li>Yongsan-gu, Seoul, Republic of Korea</li>
+    </p>
+  </div>
+</section>
 
 {% endblock %}

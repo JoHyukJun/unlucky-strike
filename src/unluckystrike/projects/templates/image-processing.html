@@ -3,60 +3,42 @@
 
 {% block content %}
 
-
-<div class="section-container">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <img src="{% static 'projects/images/cover-04.JPG' %}" class="img-responsive" alt="">
-        <div class="card-container">
-          <div class="text-center">
-            <h1 class="h2">004 : Image Processing</h1>
-          </div>
-
-          <div class="text-center">
-          <a href="https://github.com/JoHyukJun/image-processing" title="" class="fa-icon">
-            <i class="fa fa-github"></i>
-          </a>
-
-          <a href="https://github.com/JoHyukJun/image-processing" title="" class="fa-icon">
-            <i class="fa fa-info"></i>
-          </a>
-          </div>
-        </div>
-      </div>
-
-      
-
-      <h2>Face Recognition Using Color</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-
-      <br>
-      <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Color.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
-      
-      <br><br>
-
-      <h2>Face Recognition Using Histogram</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-
-      <br>
-      <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Histogram.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
-      
-      <br><br>
-
-      <h2>Moving Detection Using Difference Image</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-
-      <br>
-      <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Moving-Object-Detection-Using-Difference-Image.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
-      <br><br>
-
-      <h2>Face And Age Prediction Using CNN - Parental Age Limit</h2>
-      <p>written by <strong>Jo Hyuk Jun</strong></p>
-      <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Face-And-Age-Prediction-Using-CNN-Parental-Age-Limit.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
-
-    </div>
+<h2 id="image-processing">Image Processing</h2>
+<hr>
+<section class="component">
+  <h3>Face Recognition Using Color</h3>
+  <div>
+    <br>
+    <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Color.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
+    <br><br>
   </div>
-</div>
+</section>
+
+<section class="component">
+  <h3>Face Recognition Using Histogram</h3>
+  <div>
+    <br>
+    <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Face-Recognition-Using-Histogram.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
+    <br><br>
+  </div>
+</section>
+
+<section class="component">
+  <h3>Moving Detection Using Difference Image</h3>
+  <div>
+    <br>
+    <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Moving-Object-Detection-Using-Difference-Image.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
+    <br><br>
+  </div>
+</section>
+
+<section class="component">
+  <h3>Face And Age Prediction Using CNN - Parental Age Limit</h3>
+  <div>
+    <br>
+    <embed src="{% static 'projects/project/imageprocessing/pdf/2019-07-31-Face-And-Age-Prediction-Using-CNN-Parental-Age-Limit.pdf' %}" type="application/pdf" width="100%" height="1000px"/>
+    <br><br>
+  </div>
+</section>
 
 {% endblock %}

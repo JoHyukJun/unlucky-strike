@@ -12,33 +12,25 @@
 
 {% block content %}
 
-<div class="hero-full-container background-image-container white-text-container" style="background-image: url('/static/images/space.jpg')">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="hero-full-wrapper">
-            <div class="text-content">
-              <h1>Hello, I'm<br>
-                <span id="typed-strings">
-                  <span>조혁준</span>
-                  <span>JO HYUK JUN</span>
-                  <span>SOFTWARE ENGINEER</span>
-                  <span><img src="{% static 'images/unluckystrike_logo_clear.png' %}" width=50 height=50 alt="Unlucky Strike"></span>
-                </span>
-                <span id="typed"></span>
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="window" style="margin: 32px; width: 250px">
+  <div class="title-bar">
+    <div class="title-bar-text">
+      UNLUCKY STRIKE
+    </div>
+
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
     </div>
   </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function (event) {
-     type();
-     movingBackgroundImage();
-  });
-</script>
+  <div class="window-body">
+    <p>Hello, there!</p>
+    <section class="field-row" style="justify-content: flex-end">
+      <button>OK</button>
+      <button>Cancel</button>
+    </section>
+  </div>
+</div>
 
 {% endblock %}
