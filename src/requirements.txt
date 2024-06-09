@@ -5,6 +5,7 @@ django-ckeditor
 djangorestframework
 
 requests
+psycopg
 drf-yasg
 
 gunicorn
