@@ -4,6 +4,8 @@ django
 django-ckeditor
 djangorestframework
 
+django-letsencrypt
+
 requests
 psycopg2
 drf-yasg

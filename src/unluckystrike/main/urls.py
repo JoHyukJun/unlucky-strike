@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 
 from django.contrib.sitemaps.views import sitemap
@@ -62,6 +62,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('projects/', include('projects.urls')),
     path('service/', include('service.urls')),
+    re_path(r'^\.well-known/', include('letsencrypt.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('ads.txt', TemplateView.as_view(template_name='ads.txt', content_type='text/plain')),
