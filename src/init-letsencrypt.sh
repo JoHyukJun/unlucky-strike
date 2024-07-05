@@ -76,7 +76,7 @@ if [ $staging != "0" ]; then staging_arg="--staging"; fi
 #echo
 
 docker-compose run --rm --entrypoint "\
-  certbot certonly --standalone \
+  certbot certonly --webroot -w /var/www/certbot \
     $domain_args \
     --rsa-key-size $rsa_key_size \
     --agree-tos $email_arg
