@@ -13,6 +13,7 @@ services:
       - 443:443
     depends_on:
       - web
+
   certbot:
     image: certbot/certbot:arm32v6-nightly
     # entrypoint: "/bin/sh -c 'certbot certonly;'"
@@ -20,6 +21,7 @@ services:
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+
   web:
     build: .
     command: sh -c "cd ./unluckystrike && gunicorn main.wsgi:application --bind 0.0.0.0:8000"
@@ -34,6 +36,7 @@ services:
       - ./unluckystrike/.env.prod
     depends_on:
       - db
+      
   db:
     image: postgres:14.2
     volumes:
