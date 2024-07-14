@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from projects.models import Project
 
+from datetime import datetime
+import random
+
 
 # Create your views here.
 def project_index(request):
@@ -18,5 +21,24 @@ def project_detail(request, project):
         return render(request, 'raspberry-pi-lab.html')
     elif project == 'deep-learning-for-advanced-driver-assistance-system-applications':
         return render(request, 'deep-learning-for-advanced-driver-assistance-system-applications.html')
+    elif project == 'lottery':
+        return lottery_view(request)
     else:
         return render(request, '#')
+    
+
+def lottery_view(request):
+    now = datetime.now()
+    lottery_number = []
+
+    for i in range(6):
+        lottery_number.append(random.randrange(1, 46))
+
+    lottery_number.sort()
+
+    context = {
+        "now_date": now.strftime('%Y-%m-%d %H:%M:%S'),
+        "lottery_number": lottery_number,
+    }
+
+    return render(request, 'lottery.html', context)
