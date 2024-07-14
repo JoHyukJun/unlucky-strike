@@ -81,35 +81,47 @@
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/railscasts.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
+
+  <style>
+    nav {
+      position: fixed;
+      left: 0;
+      top: 0; /* Optional: Fix to the top of the viewport */
+      height: 100%; /* Optional: Set full height */
+      width: 250px; /* Optional: Set fixed width */
+      background-color: #f0f0f0; /* Optional: Background color */
+      padding: 20px; /* Optional: Padding */
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow */
+      overflow-y: auto; /* Optional: Add scrollbar if content exceeds height */
+    }
+  </style>
 </head>
 
 <body ontouchstart>
   <nav>
-    <aside>
-      <ul class="tree-view">
-        <li>
-          <a href="{% url 'home_index' %}">Unlucky Strike</a>
-          <ul>
-            <li><a href="{% url 'home_index' %}">Home</a></li>
-            <li><a href="{% url 'blog_index' %}">Blog</a></li>
-            <li>
-              <details>
-                <summary><a href="{% url 'project_index' %}">Project</a></summary>
-                <ul>
-                  <li><a href="/projects/object-detection">Object Detection</a></li>
-                  <li><a href="/projects/raspberry-pi-lab">Raspberry Pi Lab</a></li>
-                  <li><a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications">jADAS</a></li>
-                  <li><a href="/projects/image-processing">Image Processing</a></li>
-                  <li><a href="/projects/cognitive-services">Cognitive Services</a></li>
-                </ul>
-              </details>
-            </li>
-            <li><a href="{% url 'home_about' %}">About</a></li>
-            <li><a href="{% url 'home_contact' %}">Contact</a></li>
-        </li>
-        <li><a href="https://github.com/JoHyukJun/unlucky-strike">Issues, Contributing, etc.</a></li>
-      </ul>
-    </aside>
+    <ul class="tree-view">
+      <li>
+        <a href="{% url 'home_index' %}">Unlucky Strike</a>
+        <ul>
+          <li><a href="{% url 'home_index' %}">Home</a></li>
+          <li><a href="{% url 'blog_index' %}">Blog</a></li>
+          <li>
+            <details>
+              <summary><a href="{% url 'project_index' %}">Project</a></summary>
+              <ul>
+                <li><a href="/projects/object-detection">Object Detection</a></li>
+                <li><a href="/projects/raspberry-pi-lab">Raspberry Pi Lab</a></li>
+                <li><a href="/projects/deep-learning-for-advanced-driver-assistance-system-applications">jADAS</a></li>
+                <li><a href="/projects/image-processing">Image Processing</a></li>
+                <li><a href="/projects/cognitive-services">Cognitive Services</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="{% url 'home_about' %}">About</a></li>
+          <li><a href="{% url 'home_contact' %}">Contact</a></li>
+      </li>
+      <li><a href="https://github.com/JoHyukJun/unlucky-strike">Issues, Contributing, etc.</a></li>
+    </ul>
   </nav>
 
   <main>
