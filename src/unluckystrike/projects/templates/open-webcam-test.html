@@ -27,29 +27,52 @@
         </div>
       </div>
     </div>
-    <canvas id="canvas" width="1280" height="720"></canvas>
-      <script>
-        document.getElementById("webcamRun").addEventListener("click", function() {
-          if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-	          navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-		          var video = document.getElementById('video');
-		          video.srcObject = stream;
-		          video.play();
-	          });
-          }
-        });
+</section>
+<br>
+<br>
+<br>
+<section class="component">
+  <div>
+    <div class="window" style="width: 1280px">
+      <div class="title-bar">
+        <div class="title-bar-text">Capture Image</a></div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <canvas id="canvas" width="1280" height="720"></canvas>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+</section>
 
-        document.getElementById("webcamStop").addEventListener("click", function() {
-          video.pause();
-        });
-
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
+<script>
+  document.getElementById("webcamRun").addEventListener("click", function() {
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
         var video = document.getElementById('video');
-        document.getElementById("webcamCapture").addEventListener("click",function() {
-	        context.drawImage(video,0,0,960,720);
-        });
-      </script>
-  </section>
+        video.srcObject = stream;
+        video.play();
+      });
+    }
+  });
+
+  document.getElementById("webcamStop").addEventListener("click", function() {
+    video.pause();
+  });
+
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  var video = document.getElementById('video');
+  document.getElementById("webcamCapture").addEventListener("click",function() {
+    context.drawImage(video,0,0,960,720);
+  });
+</script>
 
 {% endblock %}
