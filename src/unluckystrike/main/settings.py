@@ -57,11 +57,23 @@ INSTALLED_APPS = [
     'blog',
     'service',
     # addon apps
+    'channels',
     'letsencrypt',
     'rest_framework',
     'drf_yasg',
     'ckeditor',
 ]
+
+# Channels
+ASGI_APPLICATION = 'config.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

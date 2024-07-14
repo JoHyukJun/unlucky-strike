@@ -21,8 +21,12 @@ def project_detail(request, project):
         return render(request, 'raspberry-pi-lab.html')
     elif project == 'deep-learning-for-advanced-driver-assistance-system-applications':
         return render(request, 'deep-learning-for-advanced-driver-assistance-system-applications.html')
+    elif project == 'open-webcam-test':
+        return render(request, 'open-webcam-test.html')
     elif project == 'lottery':
         return lottery_view(request)
+    elif project == 'exchange-rate':
+        return exchange_rate_view(request)
     else:
         return render(request, '#')
     
@@ -42,3 +46,8 @@ def lottery_view(request):
     }
 
     return render(request, 'lottery.html', context)
+
+
+def exchange_rate_view(request):
+
+    return render(request, 'exchange-rate.html')

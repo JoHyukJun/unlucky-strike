@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title%}원달러 환율 - Unlucky Strike{% endblock title %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* 차트를 감싸는 컨테이너 스타일 */
+.chart-container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<h2 id="lottery">원달러 환율</h2>
+
+<section class="component">
+    <section class="chart-container">
+    <h2>Monthly Sales Chart</h2>
+    <!-- Canvas 요소를 사용하여 차트를 그릴 공간을 마련 -->
+    <canvas id="myChart" width="800" height="400"></canvas>
+    </section>
+
+    <script>
+    // 차트 데이터 설정
+    const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [{
+        label: 'Sales',
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        data: [65, 59, 80, 81, 56, 55],
+        }]
+    };
+
+    // 차트 옵션 설정
+    const options = {
+        scales: {
+        yAxes: [{
+            ticks: {
+            beginAtZero: true
+            }
+        }]
+        }
+    };
+
+    // Canvas 요소 가져오기
+    const ctx = document.getElementById('excRateChart').getContext('2d');
+
+    // 차트 생성
+    const excRateChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+    </script>
+</section>
+
+
+{% endblock %}
