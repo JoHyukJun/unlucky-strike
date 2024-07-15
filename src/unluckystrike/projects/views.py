@@ -4,9 +4,6 @@ from projects.models import Project
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
 
-from projects.models import FishingPlaceInfoData
-from projects.fishingram import FishingPlcInfoSerializer
-
 from datetime import datetime
 import random
 import requests, json
