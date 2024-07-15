@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'home',
     'projects',
     'blog',
-    'service',
     # addon apps
     'letsencrypt',
     'rest_framework',
