@@ -9,7 +9,7 @@ from projects.fishingram import FishingPlcInfoSerializer
 
 from datetime import datetime
 import random
-
+import requests, json
 
 # Create your views here.
 def project_index(request):
@@ -52,6 +52,10 @@ def lottery_view(request):
     }
 
     return render(request, 'lottery.html', context)
+
+
+SERVER_TIME = datetime.now()
+UPDATE_DATE = ['01-01', '04-01', '07-01', '10-01']
 
 
 class Fishingram(APIView):
