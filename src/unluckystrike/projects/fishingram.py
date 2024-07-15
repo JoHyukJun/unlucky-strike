@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 
-from service.models import FishingPlaceInfoData
+from projects.models import FishingPlaceInfoData
 
 import os
 import glob
