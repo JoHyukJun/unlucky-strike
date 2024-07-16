@@ -38,7 +38,12 @@ def lottery_view(request):
     now = datetime.now()
     lottery_number = []
 
-    for i in range(6):
+    while(len(lottery_number) < 6):
+        ran_num = random.randrange(1, 46)
+
+        if (ran_num in lottery_number):
+            continue
+
         lottery_number.append(random.randrange(1, 46))
 
     lottery_number.sort()
