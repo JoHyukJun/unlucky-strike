@@ -44,7 +44,7 @@ def lottery_view(request):
         if (ran_num in lottery_number):
             continue
 
-        lottery_number.append(random.randrange(1, 46))
+        lottery_number.append(ran_num)
 
     lottery_number.sort()
 
