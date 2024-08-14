@@ -91,7 +91,13 @@
           <a href="{% url 'home_index' %}">Unlucky Strike</a>
           <ul>
             <li><a href="{% url 'home_index' %}">Home</a></li>
-            <li><a href="{% url 'blog_index' %}">Blog</a></li>
+            <li>
+              <details>
+                <summary><a href="{% url 'blog_index' %}">Blog</a></summary>
+                {% block category %}
+                {% endblock category %}
+              </details>
+              <a href="{% url 'blog_index' %}">Blog</a></li>
             <li>
               <details>
                 <summary><a href="{% url 'project_index' %}">Project</a></summary>
