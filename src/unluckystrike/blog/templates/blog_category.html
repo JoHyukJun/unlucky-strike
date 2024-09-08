@@ -1,26 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-
-<h2 id="blog-cat">{{ category | title }}</h2>
-<div>
-  <ul class="tree-view" style="float: right;">
-    <li>
-      <details open>
-        <summary>Categories</summary>
-        <ul>
-          {% for category in categories %}
-          <li>
-            <a href="{% url 'blog_category' category.name %}"> {{ category.name }} ({{ category.posts.count }})</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </details>
-    </li>
-  </ul>
-  <br>
-</div>
-
 <hr>
 {% if not post_list %}
   <h4>No results were found for your search</h4>
