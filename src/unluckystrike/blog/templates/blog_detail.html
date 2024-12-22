@@ -18,7 +18,7 @@
 <hr>
 
 <section class="component">
-  <div style="width:auto">
+  <div style="width:100%; height:auto;">
     {{ post.body | safe }}
   </div>
 </section>
@@ -26,7 +26,7 @@
 <hr>
 <section class="component">
   <h4>Comments</h4>
-  <div>
+  <div style="width:100%; height:auto;">
     {% for comment in comments %}
     <blockquote>
     <p>
@@ -51,10 +51,9 @@
           {{ form.verification }}
       </div>
       <input type="hidden" name="current_comment_validator" value="{{ comment_validator }}">
-      <br>
-      <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
   </div>
 </section>
 
-{% endblock %}
+{% endblock content %}
