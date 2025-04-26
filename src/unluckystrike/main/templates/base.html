@@ -94,8 +94,9 @@
             <li>
               <details>
                 <summary><a href="{% url 'blog_index' %}">Blog</a></summary>
-                {% block category %}
-                {% endblock category %}
+                {% for category in blog_categories %}
+                <li><a href="{% url 'blog_category' category.name %}">{{ category.name }}</a></li>
+                {% endfor %}
               </details>
             <li>
               <details>
