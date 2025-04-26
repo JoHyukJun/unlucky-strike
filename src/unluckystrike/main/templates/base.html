@@ -94,9 +94,11 @@
             <li>
               <details>
                 <summary><a href="{% url 'blog_index' %}">Blog</a></summary>
+                <ul>>
                 {% for category in blog_categories %}
-                <li>{{ category.name }}</a></li>
+                <li><a href="{% url 'blog_category' category.name %}">{{ category.name }}</a></li>
                 {% endfor %}
+                </ul>
               </details>
             <li>
               <details>

@@ -1,4 +1,4 @@
-from unluckystrike.blog.models import Category
+from blog.models import Category
 
 def blog_categories(request):
     """
