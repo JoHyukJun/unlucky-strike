@@ -5,7 +5,6 @@ from django.urls import reverse
 from blog.models import Post, Category
 
 
-
 class StaticViewSitemap(Sitemap):
     priority = 0.5
     changefreq = 'daily'
