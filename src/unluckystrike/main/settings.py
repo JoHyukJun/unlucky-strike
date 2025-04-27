@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'projects',
     'blog',
     # addon apps
-    'letsencrypt',
     'rest_framework',
     'drf_yasg',
     'ckeditor',
