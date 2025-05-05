@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from projects.models import Project
 
 from rest_framework.parsers import JSONParser
