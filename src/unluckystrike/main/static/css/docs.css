@@ -116,35 +116,21 @@ button.active {
     inset -2px -2px #dfdfdf, inset 2px 2px #808080;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-container {
+  width: 100%;
+  max-width: 800px; /* PC에서 최대 너비 제한 */
+  margin: 0 auto;
+}
+
 @media (max-width: 480px) {
   aside {
-    display: none; /* 기본적으로 숨김 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 80%;
-    height: 100%;
-    background-color: #fff;
-    z-index: 1000;
-    overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  }
-
-  aside.active {
-    display: block; /* 토글 시 표시 */
-  }
-
-  .menu-toggle {
-    display: block;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 1100;
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
+    display: none;
   }
 
   main {
@@ -174,5 +160,10 @@ button.active {
 
   pre {
     overflow-x: scroll;
+  }
+
+  .image-container {
+    max-width: 100%;
+    padding: 0 10px;
   }
 }
