@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}ETF {{ etf.ticker }}  - Unlucky Strike{% endblock %}
+
+{% block content %}
+<h2>{{ etf.name }} 배당금 차트</h2>
+<canvas id="etf-chart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('etf-chart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{ labels|safe }},
+      datasets: [{
+        label: '배당금',
+        data: {{ amounts|safe }},
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 2,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: '{{ etf.name }} 배당금 추이',
+          font: { size: 18 }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: '지급일' } },
+        y: { title: { display: true, text: '배당금({{ currency }})', beginAtZero: true } }
+      }
+    }
+  });
+</script>
+{% endblock %}
