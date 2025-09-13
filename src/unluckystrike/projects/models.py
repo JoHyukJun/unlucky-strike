@@ -15,6 +15,7 @@ class Dividend(models.Model):
     etf = models.ForeignKey(ETF, on_delete=models.CASCADE, related_name='dividends')
     amount = models.DecimalField(max_digits=16, decimal_places=6)  # 배당금
     paid_date = models.DateField()  # 배당 지급일
+    record_date = models.DateField(null=True, blank=True)  # 배당 기준일
     currency = models.ForeignKey('Currency', on_delete=models.CASCADE)  # 통화
 
     def __str__(self):
