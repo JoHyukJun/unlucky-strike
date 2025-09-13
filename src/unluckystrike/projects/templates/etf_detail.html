@@ -19,6 +19,12 @@
     <option value="month">월별</option>
     <option value="year">연별</option>
   </select>
+  <label for="periodType" style="margin-left:20px;">기간:</label>
+  <select id="periodType">
+    <option value="all">전체</option>
+    <option value="6m">최근 6개월</option>
+    <option value="1y">최근 1년</option>
+  </select>
 </div>
 <canvas id="etf-chart" width="400" height="200"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -49,19 +55,52 @@
     };
   }
 
+  // 기간 필터링 함수
+  function filterPeriod(labels, data, periodType) {
+    if (periodType === 'all') {
+      return {labels, data};
+    }
+    const now = new Date();
+    let cutoff;
+    if (periodType === '6m') {
+      cutoff = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+    } else if (periodType === '1y') {
+      cutoff = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+    }
+    const filteredLabels = [];
+    const filteredData = [];
+    labels.forEach((label, idx) => {
+      const date = new Date(label);
+      if (date >= cutoff) {
+        filteredLabels.push(label);
+        filteredData.push(data[idx]);
+      }
+    });
+    return {labels: filteredLabels, data: filteredData};
+  }
+
   // 초기값
   let chartType = document.getElementById('chartType').value;
   let dateType = document.getElementById('dateType').value;
-  let grouped = groupData(rawLabels, rawData, dateType);
+  let periodType = document.getElementById('periodType').value;
+
+  // 그룹핑 및 기간 필터링
+  function getChartData() {
+    let grouped = groupData(rawLabels, rawData, dateType);
+    let filtered = filterPeriod(grouped.labels, grouped.data, periodType);
+    return filtered;
+  }
+
+  let chartData = getChartData();
 
   const ctx = document.getElementById('etf-chart').getContext('2d');
   let chart = new Chart(ctx, {
     type: chartType,
     data: {
-      labels: grouped.labels,
+      labels: chartData.labels,
       datasets: [{
         label: '배당금',
-        data: grouped.data,
+        data: chartData.data,
         backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 2,
@@ -90,13 +129,14 @@
   document.getElementById('chartType').addEventListener('change', function() {
     chartType = this.value;
     chart.destroy();
+    chartData = getChartData();
     chart = new Chart(ctx, {
       type: chartType,
       data: {
-        labels: grouped.labels,
+        labels: chartData.labels,
         datasets: [{
           label: '배당금',
-          data: grouped.data,
+          data: chartData.data,
           backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 2,
@@ -125,15 +165,52 @@
   // 날짜 기준 변경
   document.getElementById('dateType').addEventListener('change', function() {
     dateType = this.value;
-    grouped = groupData(rawLabels, rawData, dateType);
     chart.destroy();
+    chartData = getChartData();
     chart = new Chart(ctx, {
       type: chartType,
       data: {
-        labels: grouped.labels,
+        labels: chartData.labels,
         datasets: [{
           label: '배당금',
-          data: grouped.data,
+          data: chartData.data,
+          backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 2,
+          borderRadius: chartType === 'bar' ? 4 : 0,
+          fill: chartType === 'line' ? false : true,
+          tension: chartType === 'line' ? 0.3 : 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: '{{ etf.name }} 배당금 추이',
+            font: { size: 18 }
+          }
+        },
+        scales: {
+          x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
+          y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
+        }
+      }
+    });
+  });
+
+  // 기간 변경
+  document.getElementById('periodType').addEventListener('change', function() {
+    periodType = this.value;
+    chart.destroy();
+    chartData = getChartData();
+    chart = new Chart(ctx, {
+      type: chartType,
+      data: {
+        labels: chartData.labels,
+        datasets: [{
+          label: '배당금',
+          data: chartData.data,
           backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 2,
