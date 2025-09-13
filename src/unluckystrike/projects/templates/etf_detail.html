@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}ETF - {{ etf.ticker }}  - Unlucky Strike{% endblock %}
+
+{% block content %}
+<h2>{{ etf.name }} 배당금 차트</h2>
+<p style="color:#555; margin-bottom:24px;">
+  {{ etf.description|default:"해당 ETF에 대한 설명이 없습니다." }}
+</p>
+<div style="margin-bottom:16px;">
+  <label for="chartType">차트 타입 선택:</label>
+  <select id="chartType">
+    <option value="bar">막대차트</option>
+    <option value="line">선차트</option>
+  </select>
+  <label for="dateType" style="margin-left:20px;">기준:</label>
+  <select id="dateType">
+    <option value="day">일별</option>
+    <option value="month">월별</option>
+    <option value="year">연별</option>
+  </select>
+</div>
+<canvas id="etf-chart" width="400" height="200"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // 원본 데이터
+  const rawLabels = {{ labels|safe }};
+  const rawData = {{ amounts|safe }};
+  const currency = "{{ currency|default:'원' }}";
+
+  // 날짜 기준별로 데이터 그룹핑 함수
+  function groupData(labels, data, type) {
+    const grouped = {};
+    labels.forEach((label, idx) => {
+      let key;
+      if (type === 'day') {
+        key = label;
+      } else if (type === 'month') {
+        key = label.slice(0, 7); // YYYY-MM
+      } else if (type === 'year') {
+        key = label.slice(0, 4); // YYYY
+      }
+      if (!grouped[key]) grouped[key] = 0;
+      grouped[key] += data[idx];
+    });
+    return {
+      labels: Object.keys(grouped),
+      data: Object.values(grouped)
+    };
+  }
+
+  // 초기값
+  let chartType = document.getElementById('chartType').value;
+  let dateType = document.getElementById('dateType').value;
+  let grouped = groupData(rawLabels, rawData, dateType);
+
+  const ctx = document.getElementById('etf-chart').getContext('2d');
+  let chart = new Chart(ctx, {
+    type: chartType,
+    data: {
+      labels: grouped.labels,
+      datasets: [{
+        label: '배당금',
+        data: grouped.data,
+        backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 2,
+        borderRadius: chartType === 'bar' ? 4 : 0,
+        fill: chartType === 'line' ? false : true,
+        tension: chartType === 'line' ? 0.3 : 0
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: '{{ etf.name }} 배당금 추이',
+          font: { size: 18 }
+        }
+      },
+      scales: {
+        x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
+        y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
+      }
+    }
+  });
+
+  // 차트 타입 변경
+  document.getElementById('chartType').addEventListener('change', function() {
+    chartType = this.value;
+    chart.destroy();
+    chart = new Chart(ctx, {
+      type: chartType,
+      data: {
+        labels: grouped.labels,
+        datasets: [{
+          label: '배당금',
+          data: grouped.data,
+          backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 2,
+          borderRadius: chartType === 'bar' ? 4 : 0,
+          fill: chartType === 'line' ? false : true,
+          tension: chartType === 'line' ? 0.3 : 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: '{{ etf.name }} 배당금 추이',
+            font: { size: 18 }
+          }
+        },
+        scales: {
+          x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
+          y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
+        }
+      }
+    });
+  });
+
+  // 날짜 기준 변경
+  document.getElementById('dateType').addEventListener('change', function() {
+    dateType = this.value;
+    grouped = groupData(rawLabels, rawData, dateType);
+    chart.destroy();
+    chart = new Chart(ctx, {
+      type: chartType,
+      data: {
+        labels: grouped.labels,
+        datasets: [{
+          label: '배당금',
+          data: grouped.data,
+          backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 2,
+          borderRadius: chartType === 'bar' ? 4 : 0,
+          fill: chartType === 'line' ? false : true,
+          tension: chartType === 'line' ? 0.3 : 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: '{{ etf.name }} 배당금 추이',
+            font: { size: 18 }
+          }
+        },
+        scales: {
+          x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
+          y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
+        }
+      }
+    });
+  });
+</script>
+{% endblock %}

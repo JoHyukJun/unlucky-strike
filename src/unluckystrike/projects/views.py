@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from projects.models import Project
+from projects.models import Project, ETF, Dividend
 
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
@@ -30,6 +30,8 @@ def project_detail(request, project):
         return lottery_view(request)
     elif project == 'exchange-rate':
         return exchange_rate_view(request)
+    elif project == 'etf':
+        return etf_view(request)
     else:
         return render(request, '#')
     
@@ -59,3 +61,21 @@ def lottery_view(request):
 def exchange_rate_view(request):
 
     return render(request, 'exchange-rate.html')
+
+def etf_view(request):
+    etf_list = ETF.objects.all()
+    return render(request, 'etf_base.html', {'etf_list': etf_list})
+
+def etf_detail_view(request, etf_id):
+    etf = get_object_or_404(ETF, id=etf_id)
+    dividends = Dividend.objects.filter(etf=etf).order_by('paid_date')
+    labels = [div.paid_date.strftime('%Y-%m-%d') for div in dividends]
+    amounts = [float(div.amount) for div in dividends]
+    currency = dividends[0].currency.code if dividends else 'USD'  # 기본 통화 설정
+
+    return render(request, 'etf_detail.html', {
+        'etf': etf,
+        'labels': labels,
+        'amounts': amounts,
+        'currency': currency,
+    })
