@@ -7,7 +7,7 @@
 <ul>
   {% for etf in etf_list %}
     <li>
-      <a href="{% url 'etf_detail' etf.id %}">{{ etf.name }}</a>
+      <a href="{% url 'etf_detail' etf.ticker %}">{{ etf.name }}</a>
     </li>
   {% empty %}
     <li>ETF 데이터가 없습니다.</li>
