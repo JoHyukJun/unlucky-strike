@@ -66,8 +66,8 @@ def etf_view(request):
     etf_list = ETF.objects.all()
     return render(request, 'etf_base.html', {'etf_list': etf_list})
 
-def etf_detail_view(request, etf_id):
-    etf = get_object_or_404(ETF, id=etf_id)
+def etf_detail_view(request, ticker):
+    etf = get_object_or_404(ETF, ticker=ticker)
     dividends = Dividend.objects.filter(etf=etf).order_by('paid_date')
     labels = [div.paid_date.strftime('%Y-%m-%d') for div in dividends]
     amounts = [float(div.amount) for div in dividends]
