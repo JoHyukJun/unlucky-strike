@@ -31,10 +31,10 @@
 <script>
   // 원본 데이터
   const rawLabels = {{ labels|safe }};
+  // 소수점 6자리까지 표시
   const rawData = {{ amounts|safe }}.map(x => Number.parseFloat(x).toFixed(6));
   const currency = "{{ currency|default:'원' }}";
 
-  // 날짜 기준별로 데이터 그룹핑 함수
   function groupData(labels, data, type) {
     const grouped = {};
     labels.forEach((label, idx) => {
@@ -47,7 +47,7 @@
         key = label.slice(0, 4); // YYYY
       }
       if (!grouped[key]) grouped[key] = 0;
-      grouped[key] += data[idx];
+      grouped[key] = (parseFloat(grouped[key]) + parseFloat(data[idx])).toFixed(6);
     });
     return {
       labels: Object.keys(grouped),
@@ -55,7 +55,6 @@
     };
   }
 
-  // 기간 필터링 함수
   function filterPeriod(labels, data, periodType) {
     if (periodType === 'all') {
       return {labels, data};
@@ -79,12 +78,10 @@
     return {labels: filteredLabels, data: filteredData};
   }
 
-  // 초기값
   let chartType = document.getElementById('chartType').value;
   let dateType = document.getElementById('dateType').value;
   let periodType = document.getElementById('periodType').value;
 
-  // 그룹핑 및 기간 필터링
   function getChartData() {
     let grouped = groupData(rawLabels, rawData, dateType);
     let filtered = filterPeriod(grouped.labels, grouped.data, periodType);
@@ -116,6 +113,13 @@
           display: true,
           text: '{{ etf.ticker }} 배당금 추이',
           font: { size: 18 }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
+            }
+          }
         }
       },
       scales: {
@@ -125,7 +129,6 @@
     }
   });
 
-  // 차트 타입 변경
   document.getElementById('chartType').addEventListener('change', function() {
     chartType = this.value;
     chart.destroy();
@@ -152,6 +155,13 @@
             display: true,
             text: '{{ etf.ticker }} 배당금 추이',
             font: { size: 18 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
+              }
+            }
           }
         },
         scales: {
@@ -162,7 +172,6 @@
     });
   });
 
-  // 날짜 기준 변경
   document.getElementById('dateType').addEventListener('change', function() {
     dateType = this.value;
     chart.destroy();
@@ -189,6 +198,13 @@
             display: true,
             text: '{{ etf.ticker }} 배당금 추이',
             font: { size: 18 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
+              }
+            }
           }
         },
         scales: {
@@ -199,7 +215,6 @@
     });
   });
 
-  // 기간 변경
   document.getElementById('periodType').addEventListener('change', function() {
     periodType = this.value;
     chart.destroy();
@@ -226,6 +241,13 @@
             display: true,
             text: '{{ etf.ticker }} 배당금 추이',
             font: { size: 18 }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
+              }
+            }
           }
         },
         scales: {
