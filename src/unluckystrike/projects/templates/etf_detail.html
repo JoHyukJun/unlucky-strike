@@ -31,7 +31,7 @@
 <script>
   // 원본 데이터
   const rawLabels = {{ labels|safe }};
-  const rawData = {{ amounts|safe }};
+  const rawData = {{ amounts|safe }}.map(x => Number.parseFloat(x).toFixed(6));
   const currency = "{{ currency|default:'원' }}";
 
   // 날짜 기준별로 데이터 그룹핑 함수
