@@ -171,7 +171,6 @@ CKEDITOR_CONFIGS = {
         'codeSnippet_theme': 'railscasts',
         'height': 300,
         'width': '100%',
-        'removeDialogTabs': '',  # 이미지 속성 탭 제거하지 않음
         'extraAllowedContent': 'img[!src,alt]',
         'stylesSet': [
             {'name': 'Responsive Image', 'element': 'img', 'attributes': {'style': 'max-width:100%;height:auto;'}}
