@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +157,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR / '.media')
 
 # Ckeditor config
 
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono',
@@ -166,5 +170,7 @@ CKEDITOR_CONFIGS = {
             ]
         ),
         'codeSnippet_theme': 'railscasts',
+        'height': 300,
+        'width': '100%',
     },
 }
