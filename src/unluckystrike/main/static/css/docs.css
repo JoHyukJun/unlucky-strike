@@ -76,12 +76,6 @@ p {
   margin-top: 24px;
 }
 
-.component img {
-    width: 100%;
-    height: auto;
-    object-fit: contain; /* 이미지 비율 유지 */
-}
-
 blockquote {
   margin: 0 0 20px;
   padding: 20px;
@@ -123,14 +117,16 @@ button.active {
 }
 
 img {
-  max-width: 100% !important;
+  width: auto !important;
   height: auto !important;
+  max-width: 100% !important;
   display: block;
 }
 
 .image-container {
-  width: 100%;
-  max-width: 800px; /* PC에서 최대 너비 제한 */
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
   margin: 0 auto;
 }
 
