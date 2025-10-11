@@ -56,4 +56,14 @@
   </div>
 </section>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("img").forEach(function(img) {
+      img.removeAttribute("style");
+      img.removeAttribute("width");
+      img.removeAttribute("height");
+    });
+  });
+</script>
+
 {% endblock content %}
