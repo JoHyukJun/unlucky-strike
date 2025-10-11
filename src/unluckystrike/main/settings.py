@@ -171,5 +171,8 @@ CKEDITOR_CONFIGS = {
         'codeSnippet_theme': 'railscasts',
         'height': 300,
         'width': '100%',
+        'stylesSet': [
+            {'name': 'Responsive Image', 'element': 'img', 'attributes': {'style': 'max-width:100%;height:auto;'}}
+        ],
     },
 }
