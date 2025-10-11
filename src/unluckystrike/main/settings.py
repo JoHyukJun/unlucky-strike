@@ -172,7 +172,7 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': '100%',
         'removeDialogTabs': '',  # 이미지 속성 탭 제거하지 않음
-        'extraAllowedContent': 'img[!src,width,height,alt]{width,height}',  # img 태그의 width, height 속성 허용
+        'extraAllowedContent': 'img[!src,alt]',
         'stylesSet': [
             {'name': 'Responsive Image', 'element': 'img', 'attributes': {'style': 'max-width:100%;height:auto;'}}
         ],
