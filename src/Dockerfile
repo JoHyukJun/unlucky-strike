@@ -16,7 +16,12 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     musl-dev \
     git \
-    locales
+    locales \
+    zlib1g \
+    zlib1g-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev
 
 COPY . /usr/src/app/
 
