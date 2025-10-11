@@ -154,7 +154,6 @@ STATIC_ROOT = os.path.join(BASE_DIR / '.static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR / '.media')
 
-
 # Ckeditor config
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
