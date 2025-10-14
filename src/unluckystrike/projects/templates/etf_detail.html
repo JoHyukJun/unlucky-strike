@@ -21,17 +21,37 @@
   </select>
   <label for="periodType" style="margin-left:20px;">기간:</label>
   <select id="periodType">
-    <option value="all">전체</option>
-    <option value="6m">최근 6개월</option>
     <option value="1y">최근 1년</option>
+    <option value="6m">최근 6개월</option>
+    <option value="all">전체</option>
   </select>
 </div>
-<canvas id="etf-chart" width="400" height="400"></canvas>
+<div style="width:100%;max-width:700px;margin:0 auto;">
+  <canvas id="etf-chart"></canvas>
+</div>
+<style>
+  #etf-chart {
+    width: 100% !important;
+    height: 50vh !important;
+    min-height: 320px;
+    max-height: 600px;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  @media (max-width: 600px) {
+    #etf-chart {
+      height: 60vh !important;
+      min-height: 260px;
+      max-height: 80vh;
+    }
+  }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   // 원본 데이터
   const rawLabels = {{ labels|safe }};
-  // 소수점 6자리까지 표시
   const rawData = {{ amounts|safe }}.map(x => Number.parseFloat(x).toFixed(6));
   const currency = "{{ currency|default:'원' }}";
 
@@ -90,6 +110,7 @@
 
   let chartData = getChartData();
 
+  // Chart.js responsive 설정
   const ctx = document.getElementById('etf-chart').getContext('2d');
   let chart = new Chart(ctx, {
     type: chartType,
@@ -98,23 +119,38 @@
       datasets: [{
         label: '배당금',
         data: chartData.data,
-        backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: chartType === 'bar' ? 'rgba(60, 120, 216, 0.7)' : 'rgba(60, 120, 216, 0.2)',
+        borderColor: 'rgba(60, 120, 216, 1)',
         borderWidth: 2,
-        borderRadius: chartType === 'bar' ? 4 : 0,
+        borderRadius: chartType === 'bar' ? 6 : 0,
         fill: chartType === 'line' ? false : true,
-        tension: chartType === 'line' ? 0.3 : 0
+        tension: chartType === 'line' ? 0.4 : 0
       }]
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
-        legend: { display: false },
+        legend: {
+          display: true,
+          labels: {
+            color: '#333',
+            font: { size: 14, family: 'Georgia, serif' }
+          }
+        },
         title: {
           display: true,
           text: '{{ etf.ticker }} 배당금 추이',
-          font: { size: 18 }
+          font: { size: 20, family: 'Georgia, serif', weight: 'bold' },
+          color: '#222',
+          padding: {top: 16, bottom: 16}
         },
         tooltip: {
+          backgroundColor: '#f8f8f8',
+          titleColor: '#222',
+          bodyColor: '#222',
+          borderColor: '#aaa',
+          borderWidth: 1,
           callbacks: {
             label: function(context) {
               return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
@@ -123,16 +159,37 @@
         }
       },
       scales: {
-        x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
-        y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
+        x: {
+          title: {
+            display: true,
+            text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도'),
+            font: { size: 15, family: 'Georgia, serif' },
+            color: '#333'
+          },
+          ticks: { color: '#555', font: { family: 'Georgia, serif' } },
+          grid: { color: '#eee' }
+        },
+        y: {
+          title: {
+            display: true,
+            text: `배당금(${currency})`,
+            font: { size: 15, family: 'Georgia, serif' },
+            color: '#333'
+          },
+          ticks: { color: '#555', font: { family: 'Georgia, serif' } },
+          grid: { color: '#eee' },
+          beginAtZero: true
+        }
       }
     }
   });
 
-  document.getElementById('chartType').addEventListener('change', function() {
-    chartType = this.value;
-    chart.destroy();
+  function updateChart() {
+    chartType = document.getElementById('chartType').value;
+    dateType = document.getElementById('dateType').value;
+    periodType = document.getElementById('periodType').value;
     chartData = getChartData();
+    chart.destroy();
     chart = new Chart(ctx, {
       type: chartType,
       data: {
@@ -140,23 +197,38 @@
         datasets: [{
           label: '배당금',
           data: chartData.data,
-          backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: chartType === 'bar' ? 'rgba(60, 120, 216, 0.7)' : 'rgba(60, 120, 216, 0.2)',
+          borderColor: 'rgba(60, 120, 216, 1)',
           borderWidth: 2,
-          borderRadius: chartType === 'bar' ? 4 : 0,
+          borderRadius: chartType === 'bar' ? 6 : 0,
           fill: chartType === 'line' ? false : true,
-          tension: chartType === 'line' ? 0.3 : 0
+          tension: chartType === 'line' ? 0.4 : 0
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
+          legend: {
+            display: true,
+            labels: {
+              color: '#333',
+              font: { size: 14, family: 'Georgia, serif' }
+            }
+          },
           title: {
             display: true,
             text: '{{ etf.ticker }} 배당금 추이',
-            font: { size: 18 }
+            font: { size: 20, family: 'Georgia, serif', weight: 'bold' },
+            color: '#222',
+            padding: {top: 16, bottom: 16}
           },
           tooltip: {
+            backgroundColor: '#f8f8f8',
+            titleColor: '#222',
+            bodyColor: '#222',
+            borderColor: '#aaa',
+            borderWidth: 1,
             callbacks: {
               label: function(context) {
                 return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
@@ -165,97 +237,34 @@
           }
         },
         scales: {
-          x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
-          y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
+          x: {
+            title: {
+              display: true,
+              text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도'),
+              font: { size: 15, family: 'Georgia, serif' },
+              color: '#333'
+            },
+            ticks: { color: '#555', font: { family: 'Georgia, serif' } },
+            grid: { color: '#eee' }
+          },
+          y: {
+            title: {
+              display: true,
+              text: `배당금(${currency})`,
+              font: { size: 15, family: 'Georgia, serif' },
+              color: '#333'
+            },
+            ticks: { color: '#555', font: { family: 'Georgia, serif' } },
+            grid: { color: '#eee' },
+            beginAtZero: true
+          }
         }
       }
     });
-  });
+  }
 
-  document.getElementById('dateType').addEventListener('change', function() {
-    dateType = this.value;
-    chart.destroy();
-    chartData = getChartData();
-    chart = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: chartData.labels,
-        datasets: [{
-          label: '배당금',
-          data: chartData.data,
-          backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 2,
-          borderRadius: chartType === 'bar' ? 4 : 0,
-          fill: chartType === 'line' ? false : true,
-          tension: chartType === 'line' ? 0.3 : 0
-        }]
-      },
-      options: {
-        plugins: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: '{{ etf.ticker }} 배당금 추이',
-            font: { size: 18 }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
-          y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
-        }
-      }
-    });
-  });
-
-  document.getElementById('periodType').addEventListener('change', function() {
-    periodType = this.value;
-    chart.destroy();
-    chartData = getChartData();
-    chart = new Chart(ctx, {
-      type: chartType,
-      data: {
-        labels: chartData.labels,
-        datasets: [{
-          label: '배당금',
-          data: chartData.data,
-          backgroundColor: chartType === 'bar' ? 'rgba(54, 162, 235, 0.6)' : 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 2,
-          borderRadius: chartType === 'bar' ? 4 : 0,
-          fill: chartType === 'line' ? false : true,
-          tension: chartType === 'line' ? 0.3 : 0
-        }]
-      },
-      options: {
-        plugins: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: '{{ etf.ticker }} 배당금 추이',
-            font: { size: 18 }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return `배당금: ${Number.parseFloat(context.parsed.y).toFixed(6)} ${currency}`;
-              }
-            }
-          }
-        },
-        scales: {
-          x: { title: { display: true, text: dateType === 'day' ? '지급일' : (dateType === 'month' ? '월' : '연도') } },
-          y: { title: { display: true, text: `배당금(${currency})` }, beginAtZero: true }
-        }
-      }
-    });
-  });
+  document.getElementById('chartType').addEventListener('change', updateChart);
+  document.getElementById('dateType').addEventListener('change', updateChart);
+  document.getElementById('periodType').addEventListener('change', updateChart);
 </script>
 {% endblock %}
