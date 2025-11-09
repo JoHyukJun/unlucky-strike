@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'home',
     'projects',
     'blog',
+    'gallery',
     # addon apps
     'rest_framework',
     'drf_yasg',

@@ -1,0 +1,374 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery - Unlucky Strike{% endblock %}
+
+{% block content %}
+<section class="gallery-wrap">
+  <header class="gallery-header">
+    <p class="lead">A classic, cinematic photo archive.</p>
+    {% if user.is_authenticated %}
+      <button>
+       <a href="{% url 'gallery:photo_upload' %}">Image Upload</a>
+      </button>
+    {% endif %}
+  </header>
+
+  <div class="insta-grid">
+    {% for post in posts %}
+    <figure class="insta-item"
+            data-pk="{{ post.pk }}"
+            data-src="{% if post.thumbnail %}{{ post.thumbnail.image.url }}{% endif %}"
+            data-detail-url="{% url 'gallery:post_detail' post.pk %}">
+      {% if post.thumbnail %}
+        <img src="{{ post.thumbnail.image.url }}" alt="{{ post.caption|default:'post' }}" loading="lazy" />
+      {% else %}
+        <div class="no-image">No Image</div>
+      {% endif %}
+    </figure>
+    {% empty %}
+    <p class="empty">There are no posts yet.</p>
+    {% endfor %}
+  </div>
+
+  {% if posts.has_other_pages %}
+  <nav class="pagination" aria-label="pagination">
+    {% if posts.has_previous %}
+      <a href="?page={{ posts.previous_page_number }}" class="page prev">&laquo; PREV</a>
+    {% else %}
+      <span class="page prev disabled">&laquo; PREV</span>
+    {% endif %}
+    <span class="page current">PAGE {{ posts.number }} / {{ posts.paginator.num_pages }}</span>
+    {% if posts.has_next %}
+      <a href="?page={{ posts.next_page_number }}" class="page next">NEXT &raquo;</a>
+    {% else %}
+      <span class="page next disabled">NEXT &raquo;</span>
+    {% endif %}
+  </nav>
+  {% endif %}
+</section>
+
+<div id="gallery-modal" class="gallery-modal" aria-hidden="true">
+  <button class="modal-close" aria-label="close">&times;</button>
+  <div class="modal-inner" role="dialog" aria-modal="true">
+    <div class="modal-media">
+      <div class="modal-carousel">
+        <button class="carousel-prev" aria-label="previous">&lsaquo;</button>
+        <img id="modal-image" src="" alt="">
+        <button class="carousel-next" aria-label="next">&rsaquo;</button>
+      </div>
+      <div class="carousel-indicators" id="carousel-indicators"></div>
+    </div>
+    <div class="modal-meta">
+      <h3 id="modal-caption"></h3>
+      <p id="modal-date" class="muted"></p>
+      <p class="modal-tags" id="modal-tags"></p>
+      <div class="modal-actions">
+        <button id="modal-like" class="btn">LIKE</button>
+        <a id="modal-download" class="btn" target="_blank" rel="noopener">DOWNLOAD</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* 3열, 사진 사이 완전 밀착 */
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+/* figure 기본 margin 제거 */
+.insta-item {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  line-height: 0;
+  /* 추가: 하드웨어 가속 + 부드러운 hover 대비 */
+  will-change: transform;
+}
+
+/* 크롭: 4:5 영역에 맞춰 채우기 */
+.insta-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform .35s cubic-bezier(.25,.6,.3,1), filter .35s;
+}
+
+.insta-item .no-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #999;
+  font-size: 14px;
+}
+
+/* Hover 확대 + 약한 바운스 */
+.insta-item:hover img,
+.insta-item:focus-within img {
+  transform: scale(1.045);
+}
+
+.insta-item:active img {
+  transform: scale(1.02);
+}
+
+/* 선택적: 약한 바운스 느낌을 위한 keyframes (첫 진입시) */
+.insta-item:hover img {
+  animation: bounceZoom .45s ease;
+}
+
+@keyframes bounceZoom {
+  0% { transform: scale(1); }
+  55% { transform: scale(1.05); }
+  85% { transform: scale(1.03); }
+  100% { transform: scale(1.045); }
+}
+
+/* 모달 캐러셀 */
+.modal-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+}
+
+.carousel-prev { left: 10px; }
+.carousel-next { right: 10px; }
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  background: rgba(0,0,0,0.3);
+}
+
+.carousel-indicators span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+}
+
+.carousel-indicators span.active {
+  background: #fff;
+}
+
+/* 모바일 반응 유지 */
+@media (max-width: 720px) {
+  .insta-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .insta-grid { grid-template-columns: 1fr; }
+}
+
+/* 모달 기존 스타일 유지 */
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 10, 8, 0.6);
+  z-index: 1200;
+  padding: 28px;
+}
+.gallery-modal[aria-hidden="false"] { display: flex; }
+.modal-inner {
+  max-width: 92vw;
+  max-height: 90vh;
+  background: #fffefc;
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+.modal-media {
+  position: relative;
+  background: #000;
+}
+.modal-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.modal-meta { padding: 18px; font-family: Georgia, serif; color:#222; }
+.modal-actions { margin-top:12px; display:flex; gap:8px; }
+.btn {
+  background:#222; color:#fff; padding:8px 12px; border-radius:4px;
+  text-decoration:none; border:0; cursor:pointer;
+}
+.pagination { text-align:center; margin:18px 0; }
+.pagination .page { margin:0 8px; color:#222; text-decoration:none; }
+.pagination .disabled { color:#aaa; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function getCookie(name){
+    let v=document.cookie.match('(^|;)\\s*'+name+'\\s*=\\s*([^;]+)');
+    return v ? v.pop() : '';
+  }
+  const csrftoken = getCookie('csrftoken');
+
+  const modal = document.getElementById('gallery-modal');
+  const modalImage = document.getElementById('modal-image');
+  const modalCaption = document.getElementById('modal-caption');
+  const modalDate = document.getElementById('modal-date');
+  const modalTags = document.getElementById('modal-tags');
+  const modalDownload = document.getElementById('modal-download');
+  const modalLike = document.getElementById('modal-like');
+  const closeBtn = document.querySelector('.modal-close');
+  const carouselPrev = document.querySelector('.carousel-prev');
+  const carouselNext = document.querySelector('.carousel-next');
+  const indicators = document.getElementById('carousel-indicators');
+
+  let currentPhotos = [];
+  let currentIndex = 0;
+
+  function showPhoto(index) {
+    if (!currentPhotos.length) return;
+    currentIndex = index;
+    const photo = currentPhotos[index];
+    modalImage.src = photo.src;
+    modalDownload.href = photo.src;
+
+    // Update indicators
+    indicators.querySelectorAll('span').forEach((span, i) => {
+      span.classList.toggle('active', i === index);
+    });
+
+    // Show/hide navigation
+    if (currentPhotos.length > 1) {
+      carouselPrev.style.display = 'block';
+      carouselNext.style.display = 'block';
+    }
+  }
+
+  function openModal(detailUrl, src){
+    modalImage.src = src || '';
+    modalCaption.textContent = '';
+    modalDate.textContent = '';
+    modalTags.textContent = '';
+    modalDownload.href = src || '#';
+    modalLike.dataset.likeUrl = '';
+    modalLike.dataset.pk = '';
+    indicators.innerHTML = '';
+    currentPhotos = [];
+    currentIndex = 0;
+
+    fetch(detailUrl, { headers:{'X-Requested-With':'XMLHttpRequest'} })
+      .then(r=>r.json())
+      .then(data=>{
+        currentPhotos = data.photos || [];
+        modalCaption.textContent = data.caption || '';
+        modalTags.textContent = (data.tags||[]).map(t=>'#'+t).join(' ');
+        modalLike.dataset.likeUrl = "{% url 'gallery:post_like' 0 %}".replace('/0/', '/'+data.id+'/');
+        modalLike.dataset.pk = data.id;
+        modalLike.textContent = 'LIKE (' + (data.likes_count || 0) + ')';
+
+        // Create indicators
+        currentPhotos.forEach((photo, i) => {
+          const span = document.createElement('span');
+          span.addEventListener('click', () => showPhoto(i));
+          indicators.appendChild(span);
+        });
+
+        showPhoto(0);
+      })
+      .catch(()=>{});
+
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+
+  function closeModal(){
+    modal.setAttribute('aria-hidden','true');
+    modalImage.src='';
+    document.body.style.overflow='';
+  }
+
+  carouselPrev.addEventListener('click', () => {
+    const newIndex = currentIndex > 0 ? currentIndex - 1 : currentPhotos.length - 1;
+    showPhoto(newIndex);
+  });
+
+  carouselNext.addEventListener('click', () => {
+    const newIndex = currentIndex < currentPhotos.length - 1 ? currentIndex + 1 : 0;
+    showPhoto(newIndex);
+  });
+
+  document.querySelectorAll('.insta-item').forEach(item=>{
+    item.addEventListener('click', function(){
+      const detailUrl = this.dataset.detailUrl;
+      const src = this.dataset.src || this.querySelector('img')?.src;
+      openModal(detailUrl, src);
+    });
+    item.addEventListener('keydown', function(e){
+      if(e.key==='Enter' || e.key===' '){
+        e.preventDefault();
+        this.click();
+      }
+    });
+    item.setAttribute('tabindex','0');
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape' && modal.getAttribute('aria-hidden')==='false') closeModal();
+  });
+
+  modalLike.addEventListener('click', function(){
+    const url = this.dataset.likeUrl;
+    if(!url) return;
+    fetch(url, {
+      method:'POST',
+      headers:{
+        'X-CSRFToken': csrftoken,
+        'X-Requested-With':'XMLHttpRequest'
+      }
+    })
+    .then(r=>r.json())
+    .then(data=>{
+      this.textContent = (data.status==='liked' ? 'LIKE ✓ ' : 'LIKE') + ' ('+data.likes_count+')';
+    })
+    .catch(console.error);
+  });
+});
+</script>
+{% endblock %}

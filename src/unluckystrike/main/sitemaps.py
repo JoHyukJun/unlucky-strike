@@ -16,6 +16,7 @@ class StaticViewSitemap(Sitemap):
             'home_contact',
             'project_index',
             'blog_index',
+            'gallery_index',
         ]
 
     def location(self, item):

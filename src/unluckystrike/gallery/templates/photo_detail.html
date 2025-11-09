@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}{{ photo.caption|default:"Photo" }} - Unlucky Strike{% endblock %}
+
+{% block content %}
+<section class="photo-detail-wrap">
+  <header class="detail-header">
+    <a href="{% url 'gallery:gallery_index' %}" class="back-link">&larr; BACK</a>
+    <h1>{{ photo.caption|default:"Untitled" }}</h1>
+    <div class="meta">
+      <span class="author">by {{ photo.uploaded_by.username|default:"Anonymous" }}</span>
+      {% if photo.taken_date %}
+        <time>{{ photo.taken_date|date:"Y-m-d" }}</time>
+      {% endif %}
+      <span class="likes-count">LIKE {{ photo.likes.count }}</span>
+    </div>
+  </header>
+
+  <div class="photo-container">
+    <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:'photo' }}" class="main-photo">
+  </div>
+
+  <div class="photo-info">
+    {% if photo.tags.exists %}
+    <div class="tags">
+      {% for tag in photo.tags.all %}
+        <a href="{% url 'gallery:tagged_photos' tag.name %}" class="tag">#{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="actions">
+      {% if user.is_authenticated %}
+        <button id="like-btn" class="btn" data-url="{% url 'gallery:photo_like' photo.pk %}">
+          {% if user in photo.likes.all %}
+            Undo Like 
+          {% else %}
+            Like
+          {% endif %}
+        </button>
+      {% endif %}
+      <a href="{{ photo.image.url }}" download class="btn ghost">DOWNLOAD</a>
+      {% if user == photo.uploaded_by %}
+        <a href="#" class="btn ghost">EDIT</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- 댓글 섹션 -->
+  <div class="comments-section">
+    <h3>Comments ({{ comments.count }})</h3>
+    
+    {% if user.is_authenticated %}
+    <form method="post" action="#" class="comment-form">
+      {% csrf_token %}
+      <textarea name="text" placeholder="Leave a comment..." rows="3" required></textarea>
+      <button type="submit" class="btn">Submit Comment</button>
+    </form>
+    {% else %}
+    <p class="login-prompt"><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+    {% endif %}
+
+    <div class="comments-list">
+      {% for comment in comments %}
+      <article class="comment">
+        <div class="comment-header">
+          <strong class="author">{{ comment.user.username|default:"익명" }}</strong>
+          <time>{{ comment.created_at|date:"Y-m-d H:i" }}</time>
+        </div>
+        <p class="comment-text">{{ comment.text }}</p>
+      </article>
+      {% empty %}
+      <p class="empty">No comments yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.photo-detail-wrap {
+  max-width: 960px;
+  margin: 32px auto;
+  padding: 0 18px;
+  font-family: Georgia, serif;
+  color: #222;
+}
+
+.detail-header {
+  margin-bottom: 18px;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+}
+.back-link:hover {
+  color: #222;
+}
+.detail-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+.detail-header .meta {
+  display: flex;
+  gap: 14px;
+  color: #666;
+  font-size: 14px;
+  flex-wrap: wrap;
+}
+.detail-header .meta > * {
+  display: inline-block;
+}
+
+.photo-container {
+  margin-bottom: 18px;
+  background: #faf6f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.main-photo {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  object-fit: contain;
+  max-height: 80vh;
+}
+
+.photo-info {
+  margin-bottom: 28px;
+}
+.tags {
+  margin-bottom: 14px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tag {
+  display: inline-block;
+  background: #f3f3f3;
+  color: #222;
+  padding: 6px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tag:hover {
+  background: #e0e0e0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn {
+  background: #222;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 0;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn.ghost {
+  background: #f3f3f3;
+  color: #222;
+}
+.btn:hover {
+  filter: brightness(0.95);
+}
+
+/* 댓글 섹션 */
+.comments-section {
+  border-top: 1px solid #ddd;
+  padding-top: 22px;
+}
+.comments-section h3 {
+  margin: 0 0 14px;
+  font-size: 20px;
+}
+.comment-form {
+  margin-bottom: 22px;
+}
+.comment-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fffdf9;
+  margin-bottom: 10px;
+}
+.login-prompt {
+  color: #666;
+  font-size: 14px;
+}
+.login-prompt a {
+  color: #222;
+  font-weight: 600;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.comment {
+  background: #faf6f0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border-left: 3px solid #ccc;
+}
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.comment-header .author {
+  font-size: 14px;
+  color: #222;
+}
+.comment-header time {
+  font-size: 12px;
+  color: #888;
+}
+.comment-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+.empty {
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  padding: 18px 0;
+}
+
+@media (max-width: 600px) {
+  .detail-header h1 {
+    font-size: 22px;
+  }
+  .main-photo {
+    max-height: 70vh;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function getCookie(name) {
+    let v = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return v ? v.pop() : '';
+  }
+  const csrftoken = getCookie('csrftoken');
+
+  const likeBtn = document.getElementById('like-btn');
+  if (likeBtn) {
+    likeBtn.addEventListener('click', function() {
+      const url = this.dataset.url;
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrftoken,
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.status === 'liked') {
+          this.textContent = 'Undo Like';
+        } else {
+          this.textContent = 'Like';
+        }
+        // 좋아요 수 업데이트
+        const likesCountEl = document.querySelector('.likes-count');
+        if (likesCountEl) {
+          likesCountEl.textContent = 'Likes ' + data.likes_count;
+        }
+      })
+      .catch(console.error);
+    });
+  }
+
+  // 이미지 인라인 style 제거 (방어적)
+  const mainPhoto = document.querySelector('.main-photo');
+  if (mainPhoto) {
+    mainPhoto.removeAttribute('style');
+    mainPhoto.removeAttribute('width');
+    mainPhoto.removeAttribute('height');
+  }
+});
+</script>
+{% endblock %}
