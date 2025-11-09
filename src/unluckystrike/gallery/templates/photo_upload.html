@@ -5,8 +5,7 @@
 {% block content %}
 <section class="upload-wrap">
   <header class="header">
-    <h1>사진 업로드</h1>
-    <p class="lead">이미지를 선택하거나 아래 영역에 드래그하여 업로드하세요.</p>
+    <p class="lead">Choose images to upload.</p>
   </header>
 
   {% if form.non_field_errors %}
@@ -19,11 +18,11 @@
     {% csrf_token %}
 
     <div class="field">
-      <label for="{{ form.images.id_for_label }}">이미지들 (여러 장 선택 가능)</label>
+      <label for="{{ form.images.id_for_label }}">Images (multiple selection allowed)</label>
       <div id="dropzone" class="dropzone">
         {{ form.images }}
         <div class="dz-instruction">
-          <strong>클릭</strong>하여 여러 파일 선택 또는 <strong>여기로 드래그&amp;드롭</strong>
+          <strong>Click</strong> to select multiple files or <strong>drag & drop</strong> them here
         </div>
         <div id="preview-container"></div>
       </div>
@@ -31,41 +30,41 @@
     </div>
 
     <div class="field">
-      <label for="{{ form.caption.id_for_label }}">설명</label>
+      <label for="{{ form.caption.id_for_label }}">Description</label>
       {{ form.caption }}
       {% if form.caption.errors %}<p class="error">{{ form.caption.errors }}</p>{% endif %}
     </div>
 
     <div class="field">
-      <label for="{{ form.taken_date.id_for_label }}">촬영일</label>
+      <label for="{{ form.taken_date.id_for_label }}">Date Taken</label>
       {{ form.taken_date }}
       {% if form.taken_date.errors %}<p class="error">{{ form.taken_date.errors }}</p>{% endif %}
     </div>
 
     <div class="field">
-      <label for="{{ form.gallery.id_for_label }}">갤러리(선택)</label>
+      <label for="{{ form.gallery.id_for_label }}">Gallery (optional)</label>
       {{ form.gallery }}
       {% if form.gallery.errors %}<p class="error">{{ form.gallery.errors }}</p>{% endif %}
     </div>
 
     <div class="field inline">
-      <label for="{{ form.is_public.id_for_label }}">공개</label>
+      <label for="{{ form.is_public.id_for_label }}">Public</label>
       {{ form.is_public }}
       {% if form.is_public.errors %}<p class="error">{{ form.is_public.errors }}</p>{% endif %}
     </div>
 
     {% if form.fields.tags_text %}
     <div class="field">
-      <label for="id_tags_text">태그</label>
+      <label for="id_tags_text">Tags</label>
       {{ form.tags_text }}
-      <small class="hint">쉼표(,)로 구분해 입력: 예) travel, night, film</small>
+      <small class="hint">Separate with commas: e.g. travel, night, film</small>
       {% if form.tags_text.errors %}<p class="error">{{ form.tags_text.errors }}</p>{% endif %}
     </div>
     {% endif %}
 
     <div class="actions">
-      <a href="{% url 'gallery:gallery_index' %}" class="btn ghost">취소</a>
-      <button type="submit" class="btn">업로드</button>
+      <a href="{% url 'gallery:gallery_index' %}" class="btn ghost">Cancel</a>
+      <button type="submit" class="btn">Upload</button>
     </div>
   </form>
 </section>

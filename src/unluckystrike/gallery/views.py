@@ -159,7 +159,7 @@ def post_detail(request, pk):
         return JsonResponse(data)
     # non-AJAX: render detail page
     comments = post.comments.filter(is_removed=False).select_related("user")
-    return render(request, "gallery/post_detail.html", {"post": post, "comments": comments})
+    return render(request, "post_detail.html", {"post": post, "comments": comments})
 
 @login_required
 def post_like(request, pk):

@@ -7,9 +7,7 @@
   <header class="gallery-header">
     <p class="lead">A classic, cinematic photo archive.</p>
     {% if user.is_authenticated %}
-      <button>
-       <a href="{% url 'gallery:photo_upload' %}">Image Upload</a>
-      </button>
+      <button onclick="location.href='{% url 'gallery:photo_upload' %}'"><a href="{% url 'gallery:photo_upload' %}">Image Upload</a></button>
     {% endif %}
   </header>
 
@@ -64,7 +62,7 @@
       <p class="modal-tags" id="modal-tags"></p>
       <div class="modal-actions">
         <button id="modal-like" class="btn">LIKE</button>
-        <a id="modal-download" class="btn" target="_blank" rel="noopener">DOWNLOAD</a>
+        <button id="modal-download" class="btn" target="_blank" rel="noopener">DOWNLOAD</button>
       </div>
     </div>
   </div>
@@ -143,22 +141,18 @@
   height: 100%;
 }
 
+
 .carousel-prev,
 .carousel-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
-  color: #fff;
   border: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 24px;
   cursor: pointer;
   z-index: 10;
   display: none;
 }
+
 
 .carousel-prev { left: 10px; }
 .carousel-next { right: 10px; }
@@ -229,7 +223,6 @@
 .modal-meta { padding: 18px; font-family: Georgia, serif; color:#222; }
 .modal-actions { margin-top:12px; display:flex; gap:8px; }
 .btn {
-  background:#222; color:#fff; padding:8px 12px; border-radius:4px;
   text-decoration:none; border:0; cursor:pointer;
 }
 .pagination { text-align:center; margin:18px 0; }
