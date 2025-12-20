@@ -28,6 +28,7 @@ aside .tree-view {
 
 h1 {
   margin: 12px 0;
+  font-size: 1.8rem;
 }
 
 hr {
@@ -50,6 +51,7 @@ hr {
 
 h2 {
   margin-bottom: 12px;
+  font-size: 1.5rem;
 }
 
 h3 {

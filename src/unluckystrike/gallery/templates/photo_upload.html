@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}사진 업로드 - Unlucky Strike{% endblock %}
+
+{% block content %}
+<section class="upload-wrap">
+  <header class="header">
+    <p class="lead">Choose images to upload.</p>
+  </header>
+
+  {% if form.non_field_errors %}
+    <div class="alert">
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+
+    <div class="field">
+      <label for="{{ form.images.id_for_label }}">Images (multiple selection allowed)</label>
+      <div id="dropzone" class="dropzone">
+        {{ form.images }}
+        <div class="dz-instruction">
+          <strong>Click</strong> to select multiple files or <strong>drag & drop</strong> them here
+        </div>
+        <div id="preview-container"></div>
+      </div>
+      {% if form.images.errors %}<p class="error">{{ form.images.errors }}</p>{% endif %}
+    </div>
+
+    <div class="field">
+      <label for="{{ form.caption.id_for_label }}">Description</label>
+      {{ form.caption }}
+      {% if form.caption.errors %}<p class="error">{{ form.caption.errors }}</p>{% endif %}
+    </div>
+
+    <div class="field">
+      <label for="{{ form.taken_date.id_for_label }}">Date Taken</label>
+      {{ form.taken_date }}
+      {% if form.taken_date.errors %}<p class="error">{{ form.taken_date.errors }}</p>{% endif %}
+    </div>
+
+    <div class="field">
+      <label for="{{ form.gallery.id_for_label }}">Gallery (optional)</label>
+      {{ form.gallery }}
+      {% if form.gallery.errors %}<p class="error">{{ form.gallery.errors }}</p>{% endif %}
+    </div>
+
+    <div class="field inline">
+      <label for="{{ form.is_public.id_for_label }}">Public</label>
+      {{ form.is_public }}
+      {% if form.is_public.errors %}<p class="error">{{ form.is_public.errors }}</p>{% endif %}
+    </div>
+
+    {% if form.fields.tags_text %}
+    <div class="field">
+      <label for="id_tags_text">Tags</label>
+      {{ form.tags_text }}
+      <small class="hint">Separate with commas: e.g. travel, night, film</small>
+      {% if form.tags_text.errors %}<p class="error">{{ form.tags_text.errors }}</p>{% endif %}
+    </div>
+    {% endif %}
+
+    <div class="actions">
+      <a href="{% url 'gallery:gallery_index' %}" class="btn ghost">Cancel</a>
+      <button type="submit" class="btn">Upload</button>
+    </div>
+  </form>
+</section>
+
+<style>
+.upload-wrap {
+  max-width: 760px; margin: 32px auto; padding: 0 18px;
+  font-family: Georgia, serif; color:#222;
+}
+.header h1 { margin:0 0 6px; font-size:26px; letter-spacing:.02em; }
+.header .lead { margin:0 0 18px; color:#555; font-size:14px; }
+.alert { background:#fff3cd; border:1px solid #ffeeba; padding:10px 12px; border-radius:6px; margin-bottom:16px; font-size:14px; }
+
+.upload-form .field { margin-bottom:16px; }
+.upload-form .field.inline { display:flex; align-items:center; gap:10px; }
+.upload-form label { display:block; margin-bottom:6px; font-weight:600; }
+.upload-form input[type="text"],
+.upload-form input[type="date"],
+.upload-form textarea,
+.upload-form select {
+  width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;
+  background:#fffdf9;
+}
+.upload-form textarea { min-height:120px; }
+
+.dropzone {
+  border:2px dashed #b6b6b6; background:#faf6f0; border-radius:8px; padding:18px; text-align:center; position:relative;
+  min-height:220px; display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.dropzone.dragover { border-color:#3c78d8; background:#f0f6ff; }
+.dropzone .dz-instruction { color:#555; }
+.dropzone img#preview {
+  display:none; max-width:100%; max-height:60vh; object-fit:contain; border-radius:6px; box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.error { color:#b00020; font-size:13px; margin-top:6px; }
+.hint { color:#777; font-size:12px; }
+
+.actions { display:flex; gap:10px; justify-content:flex-end; margin-top:22px; }
+.btn {
+  background:#222; color:#fff; padding:10px 14px; border-radius:6px; border:0; cursor:pointer; font-size:14px; text-decoration:none; display:inline-block;
+}
+.btn.ghost { background:#f3f3f3; color:#222; }
+.btn:hover { filter:brightness(0.95); }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const dz = document.getElementById('dropzone');
+  const fileInput = document.querySelector('input[name="images"]');
+  const previewContainer = document.getElementById('preview-container');
+  const instruction = dz.querySelector('.dz-instruction');
+
+  function showPreviews(files) {
+    previewContainer.innerHTML = '';
+    instruction.style.display = files.length ? 'none' : 'block';
+    
+    Array.from(files).forEach((file, idx) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.cssText = 'width:120px;height:120px;object-fit:cover;margin:5px;border-radius:4px;';
+        previewContainer.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  fileInput.addEventListener('change', (e) => {
+    showPreviews(e.target.files);
+  });
+
+  ['dragenter','dragover'].forEach(evt =>
+    dz.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dz.classList.add('dragover'); })
+  );
+  ['dragleave','drop'].forEach(evt =>
+    dz.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('dragover'); })
+  );
+  dz.addEventListener('drop', (e) => {
+    const files = e.dataTransfer.files;
+    if (files && files.length) {
+      fileInput.files = files;
+      showPreviews(files);
+    }
+  });
+});
+</script>
+{% endblock %}
