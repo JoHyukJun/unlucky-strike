@@ -5,7 +5,6 @@
 {% block content %}
 <section class="gallery-wrap">
   <header class="gallery-header">
-    <p class="lead">A classic, cinematic photo archive.</p>
     {% if user.is_authenticated %}
       <button onclick="location.href='{% url 'gallery:photo_upload' %}'"><a href="{% url 'gallery:photo_upload' %}">Image Upload</a></button>
     {% endif %}
