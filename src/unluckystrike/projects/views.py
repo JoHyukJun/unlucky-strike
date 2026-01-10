@@ -195,23 +195,17 @@ def system_monitoring_view(request):
 class SystemMonitoringAPIView(APIView):
     def get(self, request):
         # CPU 정보
-        cpu_percent = psutil.cpu_percent(interval=1)
+        cpu_percent = get_cpu_info()[0]
 
         # 메모리 정보
-        memory = psutil.virtual_memory()
-        memory_percent = memory.percent
-        memory_used = memory.used / (1024**3)  # GB
+        memory_percent, memory_used, _ = get_memory_info()
 
         # 디스크 정보
-        disk = psutil.disk_usage('/')
-        disk_percent = disk.percent
-        disk_used = disk.used / (1024**3)  # GB
+        disk_percent, disk_used, _ = get_disk_info()
 
         # 네트워크 정보
-        net = psutil.net_io_counters()
-        net_sent = net.bytes_sent / (1024**2)  # MB
-        net_recv = net.bytes_recv / (1024**2)  # MB
-
+        net_sent, net_recv = get_network_info()
+        
         data = {
             'cpu_percent': cpu_percent,
             'memory_percent': memory_percent,
