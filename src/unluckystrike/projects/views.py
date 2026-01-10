@@ -85,7 +85,7 @@ def etf_detail_view(request, ticker):
         'currency': currency,
     })
 
-def get_cpu_info():
+def get_cpu_usage():
     try:
         with open('/JLOG/vmstat.log', 'r') as f:
             lines = f.readlines()
@@ -96,13 +96,25 @@ def get_cpu_info():
             us = float(last_line[-5])  # user CPU %
             sy = float(last_line[-4])  # system CPU %
             id = float(last_line[-3])  # idle CPU %
-            cpu_percent = us + sy  # 총 CPU 사용률 (user + system)
-            cpu_count = 1  # vmstat은 전체 CPU를 합산하므로 1로 설정 (실제 코어 수는 별도 확인 필요)
-            cpu_freq = 0.0  # vmstat에 없으므로 0으로 설정 (필요시 추가)
-            return cpu_percent, cpu_count, cpu_freq
+            return cpu_percent
     except Exception as e:
         pass
     return 0.0, 1, 0.0
+
+def get_cpu_info():
+    try:
+        # CPU 코어 수
+        result = subprocess.run(['sysctl', '-n', 'hw.ncpu'], capture_output=True, text=True)
+        cpu_count = int(result.stdout.strip())
+        
+        # CPU 주파수 (Hz to MHz)
+        result = subprocess.run(['sysctl', '-n', 'hw.cpufrequency'], capture_output=True, text=True)
+        cpu_freq = int(result.stdout.strip()) / 1000000
+        
+        return cpu_count, cpu_freq
+    except Exception as e:
+        return 1, 0.0
+
     
 def get_memory_info():
     try:
@@ -161,7 +173,9 @@ def get_uptime():
         return "Unknown"
     
 def system_monitoring_view(request):
-    cpu_percent, cpu_count, cpu_freq = get_cpu_info()
+    cpu_percent = get_cpu_usage()
+    cpu_count, cpu_freq = get_cpu_info()
+
     memory_percent, memory_used, memory_total = get_memory_info()
     disk_percent, disk_used, disk_total = get_disk_info()
     net_sent, net_recv = get_network_info()
@@ -187,7 +201,7 @@ def system_monitoring_view(request):
 class SystemMonitoringAPIView(APIView):
     def get(self, request):
         # CPU 정보
-        cpu_percent = get_cpu_info()[0]
+        cpu_percent = get_cpu_usage()
 
         # 메모리 정보
         memory_percent, memory_used, _ = get_memory_info()
