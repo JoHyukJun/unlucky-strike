@@ -8,7 +8,7 @@ from rest_framework import status
 
 from datetime import datetime
 import random
-import requests, json
+import requests, json, subprocess
 
 # Create your views here.
 def project_index(request):
@@ -96,6 +96,7 @@ def get_cpu_usage():
             us = float(last_line[-5])  # user CPU %
             sy = float(last_line[-4])  # system CPU %
             id = float(last_line[-3])  # idle CPU %
+            cpu_percent = us + sy  # 사용률 계산
             return cpu_percent
     except Exception as e:
         pass
@@ -115,7 +116,6 @@ def get_cpu_info():
     except Exception as e:
         return 1, 0.0
 
-    
 def get_memory_info():
     try:
         with open('/proc/meminfo', 'r') as f:
