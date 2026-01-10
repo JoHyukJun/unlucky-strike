@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">시스템 모니터링</h1>
+
+    <div class="row">
+        <!-- CPU 정보 -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>CPU</h5>
+                </div>
+                <div class="card-body">
+                    <p>사용률: <span id="cpu-percent">{{ cpu_percent }}%</span></p>
+                    <p>코어 수: {{ cpu_count }}</p>
+                    <p>현재 주파수: {{ cpu_freq }} MHz</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ cpu_percent }}%" aria-valuenow="{{ cpu_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 메모리 정보 -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>메모리</h5>
+                </div>
+                <div class="card-body">
+                    <p>사용률: <span id="memory-percent">{{ memory_percent }}%</span></p>
+                    <p>사용: <span id="memory-used">{{ memory_used }}</span> GB / {{ memory_total }} GB</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ memory_percent }}%" aria-valuenow="{{ memory_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- 디스크 정보 -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>디스크</h5>
+                </div>
+                <div class="card-body">
+                    <p>사용률: <span id="disk-percent">{{ disk_percent }}%</span></p>
+                    <p>사용: <span id="disk-used">{{ disk_used }}</span> GB / {{ disk_total }} GB</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ disk_percent }}%" aria-valuenow="{{ disk_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 네트워크 정보 -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>네트워크</h5>
+                </div>
+                <div class="card-body">
+                    <p>전송: <span id="net-sent">{{ net_sent }}</span> MB</p>
+                    <p>수신: <span id="net-recv">{{ net_recv }}</span> MB</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- 시스템 정보 -->
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>시스템 정보</h5>
+                </div>
+                <div class="card-body">
+                    <p>업타임: {{ uptime }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 차트 영역 -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>실시간 모니터링 차트</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monitoringChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('monitoringChart').getContext('2d');
+    const monitoringChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'CPU 사용률 (%)',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+            }, {
+                label: '메모리 사용률 (%)',
+                data: [],
+                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                fill: true,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    function updateData() {
+        fetch('/api/system-monitoring/')
+            .then(response => response.json())
+            .then(data => {
+                // 업데이트된 데이터로 차트 업데이트
+                const now = new Date().toLocaleTimeString();
+                monitoringChart.data.labels.push(now);
+                monitoringChart.data.datasets[0].data.push(data.cpu_percent);
+                monitoringChart.data.datasets[1].data.push(data.memory_percent);
+
+                // 오래된 데이터 제거 (최근 20개만 유지)
+                if (monitoringChart.data.labels.length > 20) {
+                    monitoringChart.data.labels.shift();
+                    monitoringChart.data.datasets[0].data.shift();
+                    monitoringChart.data.datasets[1].data.shift();
+                }
+
+                monitoringChart.update();
+
+                // 화면 업데이트
+                document.getElementById('cpu-percent').textContent = data.cpu_percent + '%';
+                document.getElementById('memory-percent').textContent = data.memory_percent + '%';
+                document.getElementById('memory-used').textContent = data.memory_used.toFixed(2);
+                document.getElementById('disk-percent').textContent = data.disk_percent + '%';
+                document.getElementById('disk-used').textContent = data.disk_used.toFixed(2);
+                document.getElementById('net-sent').textContent = data.net_sent.toFixed(2);
+                document.getElementById('net-recv').textContent = data.net_recv.toFixed(2);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // 5초마다 업데이트
+    setInterval(updateData, 5000);
+</script>
+{% endblock %}
