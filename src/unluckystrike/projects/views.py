@@ -3,6 +3,8 @@ from projects.models import Project, ETF, Dividend
 
 from rest_framework.parsers import JSONParser
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from datetime import datetime
 import random
@@ -34,6 +36,7 @@ def project_detail(request, project):
         return etf_view(request)
     elif project == 'system-monitoring':
         return system_monitoring_view(request)
+        return SystemMonitoringAPIView.as_view()(request)
     else:
         return render(request, '#')
     
@@ -205,7 +208,7 @@ class SystemMonitoringAPIView(APIView):
 
         # 네트워크 정보
         net_sent, net_recv = get_network_info()
-        
+
         data = {
             'cpu_percent': cpu_percent,
             'memory_percent': memory_percent,
