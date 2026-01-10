@@ -131,7 +131,7 @@
     });
 
     function updateData() {
-        fetch('/api/system-monitoring/')
+        fetch('/projects/api/system-monitoring/')
             .then(response => response.json())
             .then(data => {
                 // 업데이트된 데이터로 차트 업데이트
