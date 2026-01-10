@@ -87,52 +87,44 @@ def etf_detail_view(request, ticker):
 
 def get_cpu_info():
     try:
-        result = subprocess.run(['nproc'], capture_output=True, text=True)
-        cpu_count = int(result.stdout.strip())
-        
-        # 간단한 CPU 사용률 (top 명령어 사용, 부정확하지만 대안)
-        result = subprocess.run(['top', '-bn1'], capture_output=True, text=True)
-        lines = result.stdout.split('\n')
-        for line in lines:
-            if 'Cpu(s)' in line:
-                # 예: %Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-                parts = line.split()
-                idle = float(parts[7].rstrip(','))
-                cpu_percent = 100.0 - idle
-                break
-        else:
-            cpu_percent = 0.0
-        
-        # CPU 주파수 (lscpu 사용)
-        result = subprocess.run(['lscpu'], capture_output=True, text=True)
-        cpu_freq = 0
-        for line in result.stdout.split('\n'):
-            if 'CPU MHz:' in line:
-                cpu_freq = float(line.split(':')[1].strip())
-                break
-        
-        return cpu_percent, cpu_count, cpu_freq
+        with open('/JLOG/vmstat.log', 'r') as f:
+            lines = f.readlines()
+        if len(lines) < 3:  # 헤더와 최소 1줄 데이터 필요
+            return 0.0, 1, 0.0
+        last_line = lines[-1].strip().split()
+        if len(last_line) >= 17:  # vmstat 출력 필드 수 확인
+            us = float(last_line[-5])  # user CPU %
+            sy = float(last_line[-4])  # system CPU %
+            id = float(last_line[-3])  # idle CPU %
+            cpu_percent = us + sy  # 총 CPU 사용률 (user + system)
+            cpu_count = 1  # vmstat은 전체 CPU를 합산하므로 1로 설정 (실제 코어 수는 별도 확인 필요)
+            cpu_freq = 0.0  # vmstat에 없으므로 0으로 설정 (필요시 추가)
+            return cpu_percent, cpu_count, cpu_freq
     except Exception as e:
-        return 0.0, 1, 0
+        pass
+    return 0.0, 1, 0.0
 
 def get_memory_info():
     try:
-        with open('/proc/meminfo', 'r') as f:
+        with open('/JLOG/vmstat.log', 'r') as f:
             lines = f.readlines()
-        mem_total = 0
-        mem_available = 0
-        for line in lines:
-            if line.startswith('MemTotal:'):
-                mem_total = int(line.split()[1]) * 1024  # KB to bytes
-            elif line.startswith('MemAvailable:'):
-                mem_available = int(line.split()[1]) * 1024
-        mem_used = mem_total - mem_available
-        memory_percent = (mem_used / mem_total) * 100 if mem_total > 0 else 0
-        memory_used_gb = mem_used / (1024**3)
-        memory_total_gb = mem_total / (1024**3)
-        return memory_percent, memory_used_gb, memory_total_gb
+        if len(lines) < 3:
+            return 0.0, 0.0, 1.0
+        last_line = lines[-1].strip().split()
+        if len(last_line) >= 6:  # 메모리 필드 확인
+            swpd = int(last_line[2]) * 1024  # KB to bytes (swap used)
+            free = int(last_line[3]) * 1024
+            buff = int(last_line[4]) * 1024
+            cache = int(last_line[5]) * 1024
+            mem_total = free + buff + cache + swpd  # 대략적 총 메모리 (실제 /proc/meminfo와 다를 수 있음)
+            mem_used = swpd + buff + cache  # 사용된 메모리 (swap + buff + cache)
+            memory_percent = (mem_used / mem_total) * 100 if mem_total > 0 else 0
+            memory_used_gb = mem_used / (1024**3)
+            memory_total_gb = mem_total / (1024**3)
+            return memory_percent, memory_used_gb, memory_total_gb
     except Exception as e:
-        return 0.0, 0.0, 1.0
+        pass
+    return 0.0, 0.0, 1.0
 
 def get_disk_info():
     try:
