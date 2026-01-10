@@ -103,28 +103,25 @@ def get_cpu_info():
     except Exception as e:
         pass
     return 0.0, 1, 0.0
-
+    
 def get_memory_info():
     try:
-        with open('/JLOG/vmstat.log', 'r') as f:
+        with open('/proc/meminfo', 'r') as f:
             lines = f.readlines()
-        if len(lines) < 3:
-            return 0.0, 0.0, 1.0
-        last_line = lines[-1].strip().split()
-        if len(last_line) >= 6:  # 메모리 필드 확인
-            swpd = int(last_line[2]) * 1024  # KB to bytes (swap used)
-            free = int(last_line[3]) * 1024
-            buff = int(last_line[4]) * 1024
-            cache = int(last_line[5]) * 1024
-            mem_total = free + buff + cache + swpd  # 대략적 총 메모리 (실제 /proc/meminfo와 다를 수 있음)
-            mem_used = swpd + buff + cache  # 사용된 메모리 (swap + buff + cache)
-            memory_percent = (mem_used / mem_total) * 100 if mem_total > 0 else 0
-            memory_used_gb = mem_used / (1024**3)
-            memory_total_gb = mem_total / (1024**3)
-            return memory_percent, memory_used_gb, memory_total_gb
+        mem_total = 0
+        mem_available = 0
+        for line in lines:
+            if line.startswith('MemTotal:'):
+                mem_total = int(line.split()[1]) * 1024  # KB to bytes
+            elif line.startswith('MemAvailable:'):
+                mem_available = int(line.split()[1]) * 1024
+        mem_used = mem_total - mem_available
+        memory_percent = (mem_used / mem_total) * 100 if mem_total > 0 else 0
+        memory_used_gb = mem_used / (1024**3)
+        memory_total_gb = mem_total / (1024**3)
+        return memory_percent, memory_used_gb, memory_total_gb
     except Exception as e:
-        pass
-    return 0.0, 0.0, 1.0
+        return 0.0, 0.0, 1.0
 
 def get_disk_info():
     try:
