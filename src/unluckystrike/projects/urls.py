@@ -6,5 +6,5 @@ urlpatterns = [
     path('<project>', views.project_detail, name="project_detail"),
     path('etf/', views.etf_view, name='etf'),
     path('etf/<str:ticker>/', views.etf_detail_view, name='etf_detail'),
-    path('api/system-monitoring/', views.SystemMonitoringAPIView.as_view(), name='system_monitoring_api'),
+    path('system-monitoring/', views.system_monitoring_view, name='system_monitoring'),
 ]
