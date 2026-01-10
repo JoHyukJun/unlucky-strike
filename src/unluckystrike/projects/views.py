@@ -213,10 +213,10 @@ class SystemMonitoringAPIView(APIView):
         net_sent, net_recv = get_network_info()
 
         data = {
-            'cpu_percent': cpu_percent,
-            'memory_percent': memory_percent,
+            'cpu_percent': round(cpu_percent, 2),
+            'memory_percent': round(memory_percent, 2),
             'memory_used': round(memory_used, 2),
-            'disk_percent': disk_percent,
+            'disk_percent': round(disk_percent, 2),
             'disk_used': round(disk_used, 2),
             'net_sent': round(net_sent, 2),
             'net_recv': round(net_recv, 2),
