@@ -29,6 +29,7 @@ services:
       - .:/usr/src/app
       - static_volume:/usr/src/app/unluckystrike/.static
       - media_volume:/usr/src/app/unluckystrike/.media
+      - /JLOG:/JLOG
     expose:
       - 8000
     restart: always
