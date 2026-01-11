@@ -102,20 +102,6 @@ def get_cpu_usage():
         pass
     return 0.0, 1, 0.0
 
-def get_cpu_info():
-    try:
-        # CPU 코어 수
-        result = subprocess.run(['sysctl', '-n', 'hw.ncpu'], capture_output=True, text=True)
-        cpu_count = int(result.stdout.strip())
-        
-        # CPU 주파수 (Hz to MHz)
-        result = subprocess.run(['sysctl', '-n', 'hw.cpufrequency'], capture_output=True, text=True)
-        cpu_freq = int(result.stdout.strip()) / 1000000
-        
-        return cpu_count
-    except Exception as e:
-        return 1
-
 def get_memory_info():
     try:
         with open('/proc/meminfo', 'r') as f:
@@ -174,7 +160,6 @@ def get_uptime():
     
 def system_monitoring_view(request):
     cpu_percent = get_cpu_usage()
-    cpu_count = get_cpu_info()
 
     memory_percent, memory_used, memory_total = get_memory_info()
     disk_percent, disk_used, disk_total = get_disk_info()
@@ -183,7 +168,6 @@ def system_monitoring_view(request):
 
     context = {
         'cpu_percent': round(cpu_percent, 1),
-        'cpu_count': cpu_count,
         'memory_percent': round(memory_percent, 1),
         'memory_used': round(memory_used, 2),
         'memory_total': round(memory_total, 2),
