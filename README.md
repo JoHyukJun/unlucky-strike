@@ -1,59 +1,35 @@
 # unlucky-strike
 
-A tech blog project built with Django
+A Django tech blog.
 
-## About The Project
+## Overview
 
-Developers grow up struggling with various problems. This project aims to write a narrative about the process of solving these difficulties and learning through them.
+This project shares stories of developers solving problems and learning.
 
-Here's why:
-* To test and apply various new technologies
-* For constant growth
-* To share my knowledge
+Goals:
+- Test new technologies
+- Grow continuously
+- Share knowledge
 
-### Features
+## Features
 
-- **Blog App**: Post articles, categorize content, and manage blog entries with Django models and templates.
-- **Gallery App**: Upload and display photos, with forms for photo management.
-- **Home App**: Static pages like About, Contact, and Home index.
-- **Projects App**: Showcase projects, including ETF tracking, exchange rates, and technical demos (e.g., Raspberry Pi, image processing).
-- **Database Backup**: Automated scripts for backing up SQLite database.
-- **Containerized Deployment**: Docker and Docker Compose for easy development and production setup.
-- **Web Server Integration**: nginx for static file serving and reverse proxy, uWSGI for application serving.
-- **SSL Support**: Let's Encrypt integration for secure HTTPS.
+- Blog: Write and manage posts
+- Gallery: Upload and display photos
+- Home: Static pages (About, Contact)
+- Projects: Showcase tech projects
+- Backup: Automated database backup
+- Deployment: Docker containers
+- Server: nginx and uWSGI
+- Security: SSL with Let's Encrypt
 
-### Built With
+## Tech Stack
 
-* Django
-* SQLite
-* Nginx
-* Docker
-* Bootstrap
+- Django
+- SQLite
+- Nginx
+- Docker
+- Bootstrap
 
 ## Architecture
 
-The project follows a standard Django web application architecture, containerized with Docker for portability. The system is designed for scalability and ease of deployment.
-
-### System Architecture Diagram
-
-```mermaid
-graph TD;
-    A[Client (Browser)] --> B[nginx (Web Server)];
-    B --> C[uWSGI (Application Server)];
-    C --> D[Django Application];
-    D --> E[SQLite Database];
-    D --> F[Static Files (CSS/JS/Images)];
-    D --> G[Templates (HTML)];
-    
-    subgraph "Docker Containers"
-        B
-        C
-        D
-    end
-    
-    subgraph "Host System"
-        E
-        F
-        G
-    end
-
+Django app containerized with Docker.
